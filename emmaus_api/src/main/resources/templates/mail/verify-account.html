@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; padding: 20px; }
+        .card { background: #ffffff; max-width: 500px; margin: 0 auto; padding: 30px; border-radius: 8px; }
+        .btn { display: inline-block; padding: 12px 24px; background-color: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Verify Your Account</h2>
+    <p>Hello <span th:text="${userName}">User</span>,</p>
+    <p>Please confirm your account by clicking the link below:</p>
+    <a th:href="${confirmationUrl}" class="btn">Verify Account</a>
+    <p style="margin-top:20px; font-size:12px; color:#6b7280;">This link expires in 24 hours.</p>
+</div>
+</body>
+</html>
