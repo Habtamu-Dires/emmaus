@@ -55,6 +55,13 @@ spring.modulith:
 springdoc:
   default-produces-media-type: application/json
 
+s3:
+  space-access-key: ${S3_SPACES_ACCESS_KEY:something}
+  space-secret-key: ${S3_SPACES_SECRET_KEY:something}
+  space-endpoint: ${S3_SPACES_ENDPOINT:something}
+  bucket-name: ${S3_BUCKET_NAME:something}
+  region: ${S3_REGION:fra1}
+
 app:
   security:
     jwt:

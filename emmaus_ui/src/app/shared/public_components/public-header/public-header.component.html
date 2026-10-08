@@ -1,0 +1,89 @@
+<header
+  class="sticky top-0 z-50 w-full transition-all duration-300"
+  [class.bg-[var(--color-primary)]]="true"
+  [class.shadow-md]="isScrolled"
+>
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center gap-2" (click)="closeMobileMenu()">
+      <div
+        class="flex  items-center justify-center rounded-full bg-white/20 text-white font-bold text-lg"
+      >
+        <img src="/images/logo/emmaus_icon.png" alt="Emmaus Companions Logo"
+         class="h-16 w-16 rounded-full" />
+      </div>
+      <span class="text-lg font-semibold text-white tracking-tight">
+        Emmaus Companions
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex">
+      @for (link of navLinks; track link.path ) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="text-white font-semibold"
+          class="rounded-lg px-3 py-2 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <!-- CTA (desktop) -->
+    <div class="hidden lg:block">
+      
+      <a
+        routerLink="/contact"
+        class="rounded-lg bg-orange px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-orange-100)]"
+      >
+        Get Involved
+      </a>
+    </div>
+
+    <div class="flex items-center gap-6 justify-center">
+    <app-theme-toggle-button [size]="8"/>
+    <!-- Mobile toggle -->
+    <button
+      type="button"
+      class="inline-flex items-center justify-center rounded-lg p-2 text-white lg:hidden"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle menu"
+    >
+      @if (!isMobileMenuOpen) {
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      } @else {
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      }
+    </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (isMobileMenuOpen) {
+    <div class="border-t border-white/10 bg-primary-50 lg:hidden">
+      <nav class="flex flex-col px-4 py-3 space-y-1">
+        @for (link of navLinks; track link.path) {
+          <a
+            [routerLink]="link.path"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-3 py-2.5 text-sm text-white/90 hover:bg-white/10"
+          >
+            {{ link.label }}
+          </a>
+        }
+          <a
+            routerLink="/contact"
+            (click)="closeMobileMenu()"
+            class="mt-2 rounded-lg bg-orange px-3 py-2.5 text-center text-sm font-medium text-white"
+          >
+            Get Involved
+          </a>
+      </nav>
+    </div>
+  }
+</header>

@@ -1,0 +1,268 @@
+<main class="flex w-full h-full justify-center p-4">
+  <div
+    class="relative flex flex-col h-full w-full max-w-5xl overflow-hidden rounded-3xl bg-white dark:bg-gray-900 shadow-sm"
+  >
+    
+    <!-- Header -->
+    <div class="flex justify-between">
+        <!--title-->
+      <div class="shrink-0 px-6 pt-6 pb-4 lg:px-10 lg:pt-8">
+        <h4 class="mb-1 text-2xl font-semibold text-gray-800 dark:text-white/90">
+            {{ isEditMode ? 'Edit Impact Story' : 'Create New Impact Story' }}
+        </h4>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ isEditMode ? 'Update the story details below.' : 'Fill in the details to add a new impact story.' }}
+        </p>
+     </div>
+
+      <!-- Sticky footer actions -->
+      <div
+        class="shrink-0 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/80 px-6 py-4 lg:px-10"
+      >
+        <app-button size="sm" variant="outline" (btnClick)="backToList()">
+          Cancel
+        </app-button>
+        <button
+          (click)="onSubmit()"
+          [disabled]="isLoading"
+          class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+        >
+          {{ isLoading ? 'Saving...' : (isEditMode ? 'Update Story' : 'Save Story') }}
+        </button>
+      </div>
+    </div> 
+
+    <form
+      [formGroup]="createStoryForm"
+      class="flex flex-col flex-1 min-h-0"
+    >
+      <!-- Scrollable body -->
+      <div class="flex-1 overflow-y-auto px-6 pb-4 lg:px-10 custom-scrollbar">
+        <div class="grid grid-cols-1 gap-8 xl:grid-cols-2 xl:gap-10">
+          <!-- ──────── LEFT COLUMN ──────── -->
+          <div class="space-y-5">
+            <h5 class="text-lg font-medium text-gray-800 dark:text-white/90">
+              Beneficiary Details
+            </h5>
+
+            <!-- Beneficiary Name -->
+            <div>
+              <app-label>
+                Beneficiary Name <span class="text-error-500">*</span>
+              </app-label>
+              <input
+                type="text"
+                formControlName="beneficiaryName"
+                placeholder="Full name"
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('beneficiaryName') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              />
+              @if (isInvalid('beneficiaryName')) {
+                <p class="mt-1 text-xs text-error-500">Name is required</p>
+              }
+            </div>
+
+            <!-- Age + Gender -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <app-label>
+                  Age <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="number"
+                  formControlName="age"
+                  placeholder="age"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="isInvalid('age') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+                />
+                @if (isInvalid('age')) {
+                  <p class="mt-1 text-xs text-error-500">Age is required</p>
+                }
+              </div>
+              <div>
+                <app-label>
+                  Gender <span class="text-error-500">*</span>
+                </app-label>
+                <select
+                  formControlName="gender"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="isInvalid('gender') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+                >
+                  <option value="">Select</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="MALE">Male</option>
+                </select>
+                @if (isInvalid('gender')) {
+                  <p class="mt-1 text-xs text-error-500">Gender is required</p>
+                }
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <app-label>
+                Location <span class="text-error-500">*</span>
+              </app-label>
+              <input
+                type="text"
+                formControlName="location"
+                placeholder="City, Region"
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('location') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              />
+              @if (isInvalid('location')) {
+                <p class="mt-1 text-xs text-error-500">Location is required</p>
+              }
+            </div>
+
+            <!-- search program -->
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center w-full">
+                <form (ngSubmit)="onSearch()" class="w-full">
+                    <div class="relative w-full">
+                        <input
+                            type="text"
+                            [(ngModel)]="programSearchTerm" 
+                            name="referenceFilter"
+                            placeholder="Search booking reference..."
+                            class="dark:bg-dark-900 h-10.5 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-2 pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                        />
+                        <button type="submit"
+                        class="absolute -translate-y-1/2 right-2 top-1/2">
+                            <svg class="fill-gray-500 dark:fill-gray-400" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.04199 9.37381C3.04199 5.87712 5.87735 3.04218 9.37533 3.04218C12.8733 3.04218 15.7087 5.87712 15.7087 9.37381C15.7087 12.8705 12.8733 15.7055 9.37533 15.7055C5.87735 15.7055 3.04199 12.8705 3.04199 9.37381ZM9.37533 1.54218C5.04926 1.54218 1.54199 5.04835 1.54199 9.37381C1.54199 13.6993 5.04926 17.2055 9.37533 17.2055C11.2676 17.2055 13.0032 16.5346 14.3572 15.4178L17.1773 18.2381C17.4702 18.531 17.945 18.5311 18.2379 18.2382C18.5308 17.9453 18.5309 17.4704 18.238 17.1775L15.4182 14.3575C16.5367 13.0035 17.2087 11.2671 17.2087 9.37381C17.2087 5.04835 13.7014 1.54218 9.37533 1.54218Z" fill=""></path></svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="fixed z-10 mt-16 w-full max-w-75 rounded-lg bg-yellow shadow-lg dark:bg-gray-900">
+                    <ul class="max-h-60 w-full overflow-y-auto py-1 text-sm text-gray-700 dark:text-gray-200">
+                        @for(program of programList; track $index) {
+                            <li (click)="onSelectProgram(program)" 
+                                class="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                {{ program.name }}
+                            </li>
+                        }
+                    </ul >
+                </div>
+            </div>
+
+            <!-- Status and display order -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <app-label>
+                  Status <span class="text-error-500">*</span>
+                </app-label>
+                <select
+                  formControlName="status"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900 border-gray-300 dark:border-gray-600"
+                >
+                  <option value="DRAFT">Draft</option>
+                  <option value="PUBLISHED">Published</option>
+                  <option value="ARCHIVED">Archived</option>
+                </select>
+              </div>
+              
+              <div>
+                <app-label>
+                  Display Order <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="number"
+                  formControlName="displayOrder"
+                  placeholder="99"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="isInvalid('displayOrder') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+                />
+                @if (isInvalid('displayOrder')) {
+                  <p class="mt-1 text-xs text-error-500">Display order is required</p>
+                }
+              </div>
+              
+            </div>
+
+            <!-- Image URL -->
+            <div>
+              <app-label>Image URL</app-label>
+              <app-file-uploader
+                [fileUrl]="createStoryForm.get('imageUrl')?.value"
+                [acceptedTypes]="'image/png,image/jpeg,image/jpg,image/webp'"
+                folder="others"
+                (fileChanged)="onImageUpload($event)">
+            </app-file-uploader>
+            @if (isInvalid('imageUrl')) {
+              <p class="mt-1 text-xs text-error-500">Image URL is required</p>
+            }
+            </div>
+          </div>
+
+          <!-- ──────── RIGHT COLUMN ──────── -->
+          <div class="space-y-5">
+            <h5 class="text-lg font-medium text-gray-800 dark:text-white/90">
+              Story Content
+            </h5>
+
+            <!-- Short Quote -->
+            <div>
+              <app-label>
+                Short Quote <span class="text-error-500">*</span>
+              </app-label>
+              <textarea
+                formControlName="shortQuote"
+                rows="2"
+                placeholder="A short inspiring quote..."
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('shortQuote') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              ></textarea>
+              @if (isInvalid('shortQuote')) {
+                <p class="mt-1 text-xs text-error-500">Short quote is required</p>
+              }
+            </div>
+
+            <!-- Full Story -->
+            <div>
+              <app-label>
+                Full Story <span class="text-error-500">*</span>
+              </app-label>
+              <textarea
+                formControlName="fullStory"
+                rows="6"
+                placeholder="The complete impact story..."
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('fullStory') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              ></textarea>
+              @if (isInvalid('fullStory')) {
+                <p class="mt-1 text-xs text-error-500">Full story is required</p>
+              }
+            </div>
+
+            <!-- Remark -->
+            <div>
+              <app-label>
+                Remark <span class="text-error-500">*</span>
+              </app-label>
+              <textarea
+                formControlName="remark"
+                rows="2"
+                placeholder="Internal notes / remarks..."
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('remark') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              ></textarea>
+              @if (isInvalid('remark')) {
+                <p class="mt-1 text-xs text-error-500">Remark is required</p>
+              }
+            </div>
+
+            <!-- Video URL -->
+            <div>
+              <app-label>Video URL</app-label>
+              <input
+                type="url"
+                formControlName="videoUrl"
+                placeholder="https://..."
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900 border-gray-300 dark:border-gray-600"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

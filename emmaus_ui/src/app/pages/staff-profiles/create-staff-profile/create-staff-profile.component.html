@@ -1,0 +1,246 @@
+<main class="flex w-full h-full justify-center ">
+  <div
+    class="relative flex flex-col h-full w-full max-w-5xl overflow-hidden rounded-3xl bg-white dark:bg-gray-900 shadow-sm"
+  >
+
+    <!-- Header (always visible) -->
+     <div class="sticky top-0 flex justify-between">
+      <div class="shrink-0 px-6 py-2 lg:px-10 lg:pt-8">
+        <h4 class="mb-1 text-2xl font-semibold text-gray-800 dark:text-white/90">
+          Create New Staff Profile
+        </h4>
+      </div>
+      <!-- Actions – always visible at the bottom -->
+      <div
+        class="shrink-0 flex items-center justify-end gap-3 bg-gray-50 dark:bg-gray-900/80 px-6 py-4 lg:px-10"
+      >
+        <app-button size="sm" variant="outline" (btnClick)="backToStaffProfile()">
+          Close
+        </app-button>
+        <button
+          (click)="onCreateNewStaff()"
+          [disabled]="isLoading"
+          class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+        >
+          {{ isLoading ? 'Saving...' : 'Save Staff' }}
+        </button>
+      </div>
+     </div>
+
+    <form
+      [formGroup]="staffForm"
+      class="flex flex-col flex-1 min-h-0"
+    >
+      <!-- Scrollable form body -->
+      <div class="flex-1 overflow-y-auto px-6 pb-3 lg:px-10 custom-scrollbar">
+        <div class="grid grid-cols-1 gap-8 xl:grid-cols-2 xl:gap-10">
+          <!-- ──────────── LEFT: Personal Information ──────────── -->
+          <div>
+            <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90">
+              Personal Information
+            </h5>
+
+            <div class="space-y-5">
+              <!-- First Name -->
+              <div>
+                <app-label>
+                  First Name <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  placeholder="John"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('firstName')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+                @if (isInvalid('firstName')) {
+                  <p class="mt-1 text-xs text-error-500">First name is required</p>
+                }
+              </div>
+
+              <!-- Last Name -->
+              <div>
+                <app-label>
+                  Last Name <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  placeholder="Doe"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('lastName')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+                @if (isInvalid('lastName')) {
+                  <p class="mt-1 text-xs text-error-500">Last name is required</p>
+                }
+              </div>
+
+              <!-- Email -->
+              <div>
+                <app-label>
+                  Email <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="email"
+                  formControlName="email"
+                  placeholder="john.doe@example.com"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('email')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+                @if (isInvalid('email')) {
+                  <p class="mt-1 text-xs text-error-500">Valid email is required</p>
+                }
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <app-label>
+                  Phone <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="text"
+                  formControlName="phone"
+                  placeholder="+255 700 000 000"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('phone')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+                @if (isInvalid('phone')) {
+                  <p class="mt-1 text-xs text-error-500">Phone is required</p>
+                }
+              </div>
+
+              <!-- Profile Picture URL -->
+              <div>
+                <app-label>Profile Picture URL</app-label>
+                <app-file-uploader
+                  [fileUrl]="staffForm.get('profilePic')?.value"
+                  [acceptedTypes]="'image/png,image/jpeg,image/jpg,image/webp'"
+                  folder="others"
+                  (fileChanged)="onProfilePicUploaded($event)">
+                </app-file-uploader>
+              </div>
+            </div>
+          </div>
+
+          <!-- ──────────── RIGHT: Professional Details ──────────── -->
+          <div>
+            <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90">
+              Professional Details
+            </h5>
+
+            <div class="space-y-5">
+              <!-- Position -->
+              <div>
+                <app-label>
+                  Position <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="text"
+                  formControlName="position"
+                  placeholder="Senior Developer"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('position')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+                @if (isInvalid('position')) {
+                  <p class="mt-1 text-xs text-error-500">Position is required</p>
+                }
+              </div>
+
+              <!-- Department -->
+              <div>
+                <app-label>Department</app-label>
+                <input
+                  type="text"
+                  formControlName="department"
+                  placeholder="Engineering"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900 border-gray-300 dark:border-gray-600"
+                />
+              </div>
+
+              <!-- Display Order -->
+              <div>
+                <app-label>
+                  Display Order <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="number"
+                  formControlName="displayOrder"
+                  placeholder="99"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('displayOrder')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                />
+              </div>
+
+              <!-- LinkedIn URL -->
+              <div>
+                <app-label>LinkedIn URL</app-label>
+                <input
+                  type="url"
+                  formControlName="linkedinUrl"
+                  placeholder="https://linkedin.com/in/..."
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900 border-gray-300 dark:border-gray-600"
+                />
+              </div>
+
+              <!-- Description -->
+              <div>
+                <app-label>
+                  Description <span class="text-error-500">*</span>
+                </app-label>
+                <textarea
+                  formControlName="description"
+                  rows="3"
+                  placeholder="Short description..."
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="
+                    isInvalid('description')
+                      ? 'border-error-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  "
+                ></textarea>
+                @if (isInvalid('description')) {
+                  <p class="mt-1 text-xs text-error-500">Description is required</p>
+                }
+              </div>
+
+              <!-- Bio -->
+              <div>
+                <app-label>Bio</app-label>
+                <textarea
+                  formControlName="bio"
+                  rows="4"
+                  placeholder="Full biography..."
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900 border-gray-300 dark:border-gray-600"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>

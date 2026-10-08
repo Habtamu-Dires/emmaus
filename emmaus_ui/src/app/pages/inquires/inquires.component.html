@@ -1,0 +1,264 @@
+<div class="rounded-2xl border border-gray-200 bg-white pt-4 dark:border-white/5 dark:bg-white/3">
+  <!-- Header -->
+  <div class="flex flex-col gap-4 px-5 mb-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <div class="flex gap-3 items-center">
+      <h4 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+        Inquiries
+      </h4>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-hidden">
+    <div class="max-w-full px-5 overflow-x-auto sm:px-6">
+      <table class="min-w-full">
+        <thead class="border-gray-100 border-y dark:border-white/5">
+          <tr>
+            <th class="py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+              Sender
+            </th>
+            <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+              Subject
+            </th>
+            <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+              Type
+            </th>
+            <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+              Status
+            </th>
+            <th class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+              Date
+            </th>
+            <th class="px-4 py-3 font-normal text-gray-500 text-end text-theme-sm dark:text-gray-400">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+          @if (isLoading) {
+            <tr>
+              <td colspan="6" class="py-10 text-center text-gray-500 dark:text-gray-400">
+                Loading...
+              </td>
+            </tr>
+          } @else if (inquires.length === 0) {
+            <tr>
+              <td colspan="6" class="py-10 text-center text-gray-500 dark:text-gray-400">
+                No inquiries found
+              </td>
+            </tr>
+          } @else {
+            @for (inquiry of inquires; track inquiry.publicId) {
+              <tr class="hover:bg-gray-50 dark:hover:bg-white/2 transition-colors">
+                <td class="px-5 py-4 sm:px-6 text-start">
+                  <div>
+                    <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                      {{ inquiry.senderName || '—' }}
+                    </span>
+                    <span class="block text-gray-500 text-theme-xs dark:text-gray-400">
+                      {{ inquiry.senderEmail || inquiry.senderPhone || '—' }}
+                    </span>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400 max-w-50">
+                  <span class="line-clamp-1">{{ inquiry.subject || '—' }}</span>
+                </td>
+                <td class="px-4 py-4 text-gray-700 whitespace-nowrap text-theme-sm dark:text-gray-400">
+                  {{ inquiry.type || '—' }}
+                </td>
+                <td class="px-4 py-4 text-theme-sm">
+                  <span
+                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                    [ngClass]="getStatusClasses(inquiry.status)"
+                  >
+                    {{ inquiry.status || 'NEW' }}
+                  </span>
+                </td>
+                <td class="px-4 py-4 text-gray-700 whitespace-nowrap text-theme-sm dark:text-gray-400">
+                  {{ inquiry.createdAt ? (inquiry.createdAt | date: 'mediumDate') : '—' }}
+                </td>
+                <td class="px-4 py-4 text-end">
+                  <button
+                    (click)="openDetail(inquiry)"
+                    class="text-gold text-xs font-bold hover:underline dark:text-blue-500"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="px-6 py-4 border-t border-gray-200 dark:border-white/5">
+      <div class="flex items-center justify-center sm:justify-between">
+        <app-button
+          size="sm"
+          variant="outline"
+          (btnClick)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1 || isLoading"
+        >
+          <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20">
+            <path
+              d="M2.58301 9.99868C2.58272 10.1909 2.65588 10.3833 2.80249 10.53L7.79915 15.5301C8.09194 15.8231 8.56682 15.8233 8.85981 15.5305C9.15281 15.2377 9.15297 14.7629 8.86018 14.4699L5.14009 10.7472L16.6675 10.7472C17.0817 10.7472 17.4175 10.4114 17.4175 9.99715C17.4175 9.58294 17.0817 9.24715 16.6675 9.24715L5.14554 9.24715L8.86017 5.53016C9.15297 5.23717 9.15282 4.7623 8.85983 4.4695C8.56684 4.1767 8.09197 4.17685 7.79917 4.46984L2.84167 9.43049C2.68321 9.568 2.58301 9.77087 2.58301 9.99715z"
+            />
+          </svg>
+          <span class="hidden sm:inline ml-1">Previous</span>
+        </app-button>
+
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-400">
+            Page {{ currentPage }} of {{ totalPages }}
+          </span>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">
+            ({{ totalElements }} Inquiries)
+          </span>
+        </div>
+
+        <app-button
+          (btnClick)="goToPage(currentPage + 1)"
+          size="sm"
+          variant="outline"
+          [disabled]="currentPage === totalPages || isLoading"
+        >
+          <span class="hidden sm:inline mr-1">Next</span>
+          <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20">
+            <path
+              d="M17.4175 9.9986C17.4178 10.1909 17.3446 10.3832 17.198 10.53L12.2013 15.5301C11.9085 15.8231 11.4337 15.8233 11.1407 15.5305C10.8477 15.2377 10.8475 14.7629 11.1403 14.4699L14.8604 10.7472L3.33301 10.7472C2.91879 10.7472 2.58301 10.4114 2.58301 9.99715z"
+            />
+          </svg>
+        </app-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────── DETAIL MODAL ──────────────────── -->
+<app-modal
+  [isOpen]="isDetailModalOpen"
+  (close)="closeDetailModal()"
+  className="max-w-175 m-4"
+>
+  @if (selectedInquiry) {
+    <div class="flex flex-col h-full max-h-[95vh] bg-white dark:bg-gray-900 rounded-3xl">
+      <!-- Header -->
+      <div
+        class="px-6 py-5 border-b border-gray-200 dark:border-gray-800 sticky top-0 bg-white dark:bg-gray-900 rounded-t-3xl z-10"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h4 class="text-xl font-bold text-gray-900 dark:text-white">
+              {{ selectedInquiry.subject || 'Inquiry' }}
+            </h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              From {{ selectedInquiry.senderName || 'Unknown' }}
+              · {{ selectedInquiry.createdAt ? (selectedInquiry.createdAt | date: 'medium') : '' }}
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium shrink-0"
+            [ngClass]="getStatusClasses(selectedInquiry.status)"
+          >
+            {{ selectedInquiry.status || 'NEW' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="overflow-y-auto px-6 py-5 grow custom-scrollbar">
+        <!-- Sender info -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-6">
+          <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Sender Name</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">
+              {{ selectedInquiry.senderName || '—' }}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">
+              {{ selectedInquiry.senderEmail || '—' }}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">
+              {{ selectedInquiry.senderPhone || '—' }}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">
+              {{ selectedInquiry.type || '—' }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div class="mb-6">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Message</p>
+          <div
+            class="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 p-4"
+          >
+            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              {{ selectedInquiry.message || 'No message provided.' }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Update section -->
+        <div class="border-t border-gray-200 dark:border-gray-800 pt-6 space-y-4">
+          <h5 class="text-sm font-semibold text-gray-800 dark:text-white/90">
+            Update Status
+          </h5>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+              Status
+            </label>
+            <select
+              [(ngModel)]="updateStatus"
+              class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent dark:bg-gray-900 dark:text-white p-2.5 text-sm focus:ring-brand-500 focus:border-brand-500 outline-none"
+            >
+              @for (s of statuses; track s) {
+                <option [value]="s">{{ s.replace('_', ' ') }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+              Admin Remark
+            </label>
+            <textarea
+              [(ngModel)]="updateRemark"
+              rows="3"
+              placeholder="Add internal notes or action taken..."
+              class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent dark:bg-gray-900 dark:text-white p-3 text-sm focus:ring-brand-500 focus:border-brand-500 outline-none"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div
+        class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 rounded-b-3xl flex flex-wrap items-center justify-end gap-3"
+      >
+        <app-button size="sm" variant="outline" (btnClick)="closeDetailModal()">
+          Cancel
+        </app-button>
+        <button
+          type="button"
+          (click)="onUpdateStatus()"
+          [disabled]="isUpdating"
+          class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+        >
+          {{ isUpdating ? 'Saving...' : 'Update Status' }}
+        </button>
+      </div>
+    </div>
+  }
+</app-modal>

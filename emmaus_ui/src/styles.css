@@ -10,7 +10,26 @@ layer(base);
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.partners-marquee:hover .animate-marquee {
+  animation-play-state: paused; /* optional: pause on hover */
+}
+
 @theme {
+  --animate-marquee: marquee 25s linear infinite;
+  
   --font-*: initial;
   --font-outfit: Outfit, sans-serif;
 
@@ -41,23 +60,45 @@ layer(base);
   --text-theme-xs: 12px;
   --text-theme-xs--line-height: 18px;
 
+
+  /* Brand – logo navy */
+  --color-primary: #0B1F4D;
+  --color-primary-light: #14356B;
+  --color-primary-dark: #061230;
+
+  /* Accents from logo people */
+  --color-orange: #F97316;
+  --color-orange-dark: #EA580C;
+  --color-green: #16A34A;
+  --color-green-dark: #15803D;
+  --color-yellow: #EAB308;
+  --color-cyan: #06B6D4;
+
+  /* Neutrals */
+  --color-dark-navy: #0F172A;
+  --color-text: #1E293B;
+  --color-text-muted: #64748B;
+  --color-surface: #F8FAFC;
+  --color-white: #FFFFFF;
+
+
   --color-current: currentColor;
   --color-transparent: transparent;
   --color-white: #ffffff;
   --color-black: #101828;
 
-  --color-brand-25: #f2f7ff;
-  --color-brand-50: #ecf3ff;
-  --color-brand-100: #dde9ff;
-  --color-brand-200: #c2d6ff;
-  --color-brand-300: #9cb9ff;
-  --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
-  --color-brand-700: #2a31d8;
-  --color-brand-800: #252dae;
-  --color-brand-900: #262e89;
-  --color-brand-950: #161950;
+  --color-brand-25:  #F5F8FC;
+  --color-brand-50:  #EDF2F8;
+  --color-brand-100: #DCE5F2;
+  --color-brand-200: #C1D0E3;
+  --color-brand-300: #9CB2CC;
+  --color-brand-400: #718EAE;
+  --color-brand-500: #4D6B91;
+  --color-brand-600: #34537C;
+  --color-brand-700: #203D66;
+  --color-brand-800: #142E56;
+  --color-brand-900: #0B1F4D;
+  --color-brand-950: #06132F;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -87,8 +128,8 @@ layer(base);
   --color-gray-dark: #1a2231;
 
   --color-orange-25: #fffaf5;
-  --color-orange-50: #fff6ed;
-  --color-orange-100: #ffead5;
+  /* --color-orange-50: #fff6ed; */
+  /* --color-orange-100: #ffead5; */
   --color-orange-200: #fddcab;
   --color-orange-300: #feb273;
   --color-orange-400: #fd853a;

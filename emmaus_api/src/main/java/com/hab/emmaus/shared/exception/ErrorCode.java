@@ -10,7 +10,7 @@ public enum ErrorCode {
 
     PHONE_NOT_VERIFIED("ERR_NOT_VERIFIED","Phone Number not verified",NOT_ACCEPTABLE),
     EMAIL_ALREADY_EXISTS("ERR_EMAIL_EXISTS", "Email already exists", CONFLICT),
-//    PHONE_ALREADY_EXISTS("ERR_PHONE_EXISTS", "An account with this email number already exists", CONFLICT),
+    EMAIL_PHONE_ALREADY_EXISTS("ERR_ALREADY_EXISTS", "An account with this email or phone number already exists", CONFLICT),
     PASSWORD_MISMATCH("ERR_PASSWORD_MISMATCH", "The password and confirmation do not match", BAD_REQUEST),
     CHANGE_PASSWORD_MISMATCH("ERR_PASSWORD_MISMATCH", "New password and confirmation do not match", BAD_REQUEST),
     ERR_SENDING_ACTIVATION_EMAIL("ERR_SENDING_ACTIVATION_EMAIL",
@@ -159,7 +159,7 @@ public enum ErrorCode {
     ),
 
     // Driver-specific errors
-    DRIVER_NOT_FOUND(
+    INQUIRY_NOT_FOUND(
             "DRIVER_NOT_FOUND",
             "Driver not found",
             NOT_FOUND
@@ -303,9 +303,9 @@ public enum ErrorCode {
     ),
 
     // Assignment & bidding
-    ASSIGNMENT_NOT_FOUND(
-            "ASSIGNMENT_NOT_FOUND",
-            "Assignment not found",
+    STORY_NOT_FOUND(
+            "IMPACT_STORY_NOT_FOUND",
+            "Impact Story not found",
             NOT_FOUND
     ),
 
@@ -403,9 +403,9 @@ public enum ErrorCode {
     ),
 
     // Ownership & authorization
-    RESOURCE_NOT_OWNED_BY_USER(
-            "RESOURCE_NOT_OWNED_BY_USER",
-            "You do not own this resource",
+    PROGRAM_NOT_FOUND(
+            "PROGRAM_NOT_FOUND",
+            "Program not found",
             FORBIDDEN
     ),
 

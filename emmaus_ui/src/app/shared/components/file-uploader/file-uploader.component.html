@@ -1,0 +1,149 @@
+<div class="w-full">
+  <!-- NO FILE AT ALL -->
+  @if (!currentUrl) {
+    <div
+      (click)="triggerFileInput()"
+      class="group flex flex-col items-center justify-center w-full p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-brand-500 dark:hover:border-brand-500 transition-all duration-200 cursor-pointer">
+      <div class="flex items-center justify-center w-8 h-8 mb-2 rounded-full bg-brand-50 dark:bg-brand-500/10 text-brand-500 dark:text-brand-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 16V4m0 0L8 8m4-4l4 4M4 16.5v1.25A2.25 2.25 0 006.25 20h11.5A2.25 2.25 0 0020 17.75V16.5" />
+        </svg>
+      </div>
+      <p class="mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
+        Click to upload document or image
+      </p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">
+        Accepted files: {{ acceptedTypes }}
+      </p>
+    </div>
+  }
+
+  <!-- FILE EXISTS (Preview or Uploaded) -->
+  @if (currentUrl) {
+    <div class="overflow-hidden  bg-white dark:bg-gray-900"
+    [ngClass]="isReadMode ? 'w-fit' : 'w-full rounded-xl border border-gray-200 dark:border-gray-700'">
+      
+      <!-- IMAGE DISPLAY -->
+      @if (isImage) {
+        <div class="relative group">
+          <img [src]="currentUrl" alt="Preview" class="w-full h-32 object-cover bg-gray-100 dark:bg-gray-800" />
+          <div class="absolute inset-0 flex items-center justify-center gap-3 bg-black/0 group-hover:bg-black/40 transition-all duration-200">
+            <button type="button" (click)="viewFile()" class="flex items-center justify-center w-10 h-10 rounded-full bg-white/90 text-gray-700 opacity-0 group-hover:opacity-100 hover:bg-white transition" title="View Image">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12 18 18.75 12 18.75 2.25 12 2.25 12z" />
+              </svg>
+            </button>
+            <button type="button" (click)="changeFile()" [disabled]="uploading" class="flex items-center justify-center w-10 h-10 rounded-full bg-white/90 text-gray-700 opacity-0 group-hover:opacity-100 hover:bg-white transition disabled:opacity-50" title="Change File">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16.5V20h3.5L18.5 9l-3.5-3.5L4 16.5z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- DOCUMENT TILE DISPLAY (PDF, DOCX, XLSX) -->
+      @if (!isImage) {
+        <div class="flex items-center justify-between  bg-gray-50 dark:bg-gray-800/50"
+         [ngClass]="isReadMode ? 'max-w-20 p-1 gap-3' : 'w-full p-4 gap-6'">
+         @if(!isReadMode){
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="flex items-center justify-center px-2.5 py-2 rounded-lg font-bold text-xs shrink-0"
+                [class.bg-red-100]="isPdf" [class.text-red-600]="isPdf"
+                [class.bg-blue-100]="!isPdf" [class.text-blue-600]="!isPdf">
+              {{ fileExtension }}
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">
+                {{ fileName || 'Uploaded Document' }}
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                {{ isPdf ? 'PDF Document' : 'Office / Other Document' }}
+              </p>
+            </div>
+          </div>
+         }
+          <div class="flex items-center gap-2">
+            <button type="button" (click)="viewFile()" class="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition" [title]="isPdf ? 'Preview PDF' : 'Download/View Document'">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </button>
+            @if(!isReadMode){
+              <button type="button" (click)="changeFile()" [disabled]="uploading" class="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition disabled:opacity-50" title="Change File">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16.5V20h3.5L18.5 9l-3.5-3.5L4 16.5z" />
+                </svg>
+              </button>
+            }
+            
+          </div>
+        </div>
+      }
+
+      <!-- PENDING FILE SELECTION & PROGRESS -->
+      @if (selectedFile) {
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+          <div class="flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">
+                {{ selectedFile.name }}
+              </p>
+              <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              @if (!uploading) {
+                <button
+                  type="button"
+                  (click)="upload()"
+                  class="px-3.5 py-1.5 text-xs font-medium text-white rounded-lg bg-brand-500 hover:bg-brand-600 transition">
+                  Upload
+                </button>
+                <button
+                  type="button"
+                  (click)="removeSelection()"
+                  class="px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition">
+                  Cancel
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- UPLOADING PROGRESS BAR -->
+          @if (uploading) {
+            <div class="mt-3">
+              <div class="flex justify-between mb-1 text-xs text-gray-500 dark:text-gray-400">
+                <span>Uploading...</span>
+                <span>{{ uploadProgress }}%</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                <div
+                  class="h-full bg-brand-500 transition-all duration-200"
+                  [style.width.%]="uploadProgress">
+                </div>
+              </div>
+            </div>
+          }
+        </div>  
+      }
+
+    </div>
+  }
+
+  <!-- Isolated Hidden File Input per Component Instance -->
+  <input #fileInput type="file" class="hidden" [accept]="acceptedTypes" (change)="onFileSelected($event)" />
+
+  @if (errorMessage) {
+    <div class="flex items-center gap-2 mt-2 p-3 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20">
+      <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        {{ errorMessage }}
+      </p>
+    </div>
+  }
+</div>

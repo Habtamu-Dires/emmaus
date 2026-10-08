@@ -1,0 +1,31 @@
+@if (fileUrl) {
+  <div class="flex w-full items-center justify-between p-3 bg-white dark:bg-gray-900 gap-4">
+
+    <!-- Side-by-Side View and Download Buttons -->
+    <div class="flex justify-around gap-2 shrink-0 w-full">
+      <!-- View Button -->
+      <button
+        type="button"
+        (click)="viewFile()"
+        class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-medium text-gray-100 dark:text-gray-200 bg-{{accentColor}} rounded-lg transition-colors">
+        <svg class="w-4 h-4 text-white dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+        View
+      </button>
+
+      <!-- Download Button -->
+      <button
+        type="button"
+        (click)="downloadFile()"
+        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-white bg-{{accentColor}} rounded-lg transition-colors">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Download
+      </button>
+    </div>
+
+  </div>
+}

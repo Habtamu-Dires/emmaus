@@ -1,0 +1,15 @@
+<main class="flex flex-col w-full h-full items-center justify-center shadow-xl rounded-2xl ">
+    <section class="flex flex-col gap-4 bg-blue-50 dark:bg-gray-800 dark:text-white p-6 w-full h-full rounded-2xl">
+        <h1 class="text-lg">Are you sure?</h1>
+        <div>
+        <p>{{message}}</p>
+        </div>
+        <div class="w-full flex justify-evenly">
+            <p  (click)="onConfirm()" class="cursor-pointer font-mono"
+                [ngClass]="{'text-secondary': !isWarning, 'text-red-400': isWarning}">
+                {{buttonName}}
+            </p>
+            <p class="text-blue-800 cursor-pointer" (click)="onCancel()">Cancel</p>
+        </div>
+    </section>
+</main>

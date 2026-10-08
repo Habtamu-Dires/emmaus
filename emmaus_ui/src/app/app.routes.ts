@@ -25,12 +25,53 @@ import { ResetPasswordComponent } from './pages/auth-pages/reset-password/reset-
 import { authGuard } from './services/auth-guard/auth.guard';
 import { ResetEmailComponent } from './pages/auth-pages/reset-email/reset-email.component';
 import { HomeComponent } from './public_pages/home/home.component';
+import { StaffProfileComponent } from './pages/staff-profiles/staff-profile/staff-profile.component';
+import { CreateStaffProfileComponent } from './pages/staff-profiles/create-staff-profile/create-staff-profile.component';
+import { DocumentComponent } from './pages/document/document.component';
+import { ProgramsComponent } from './pages/programs/programs.component';
+import { ImpactStoriesComponent } from './pages/impact-story/impact-stories/impact-stories.component';
+import { CreateImpactStoryComponent } from './pages/impact-story/create-impact-story/create-impact-story.component';
+import { InquiresComponent } from './pages/inquires/inquires.component';
+import { PublicLayoutComponent } from './public_pages/public-layout/public-layout.component';
+import { ProgramsPageComponent } from './public_pages/programs-page/programs-page.component';
+import { ImpactStoriesPageComponent } from './public_pages/impact-stories-page/impact-stories-page.component';
+import { ImpactStoryDetailComponent } from './public_pages/impact-story-detail/impact-story-detail.component';
+import { ResourcesPageComponent } from './public_pages/resources-page/resources-page.component';
 
 export const routes: Routes = [
-  {
-    path:'',
-    component:HomeComponent,
-    title: 'Emmaus Companions'
+  // app.routes.ts (public part)
+{
+  path: '',
+  component: PublicLayoutComponent,
+  children: [
+    { 
+      path: '',
+      component:HomeComponent,
+      title: 'Emmaus Campanions'
+     },
+     { 
+      path: 'programs',
+      component:ProgramsPageComponent,
+      title: 'Programs'
+     },
+    { 
+      path: 'impact-stories',
+      component:ImpactStoriesPageComponent,
+      title: 'Impact Stories'
+     },
+     { 
+      path: 'impact-stories/:id',
+      component:ImpactStoryDetailComponent,
+      title: 'Impact Stories'
+     },
+     { 
+      path: 'resources',
+      component:ResourcesPageComponent,
+      title: 'Resources'
+     },
+
+
+  ],
   },
   {
     path:'admin',
@@ -42,7 +83,7 @@ export const routes: Routes = [
         component: EcommerceComponent,
         pathMatch: 'full',
         title:
-          'Angular Ecommerce Dashboard | TailAdmin - Angular Admin Dashboard Template',
+          'Emmaus Dashboard',
       },
       //change password
       {
@@ -51,113 +92,89 @@ export const routes: Routes = [
         title:'Change Password',
       },
       {
-        path:'calendar',
-        component:CalenderComponent,
-        title:'Angular Calender | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
         path:'profile',
         component:ProfileComponent,
-        title:'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        title:'Profile'
       },
+      //staff-profile
       {
-        path:'form-elements',
-        component:FormElementsComponent,
-        title:'Angular Form Elements Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'staff-profile',
+        component:StaffProfileComponent,
+        title:' Emmaus Staff Profile'
       },
+      //create-staff-profile
       {
-        path:'basic-tables',
-        component:BasicTablesComponent,
-        title:'Angular Basic Tables Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'create-staff-profile',
+        component:CreateStaffProfileComponent,
+        title:'Create Staff Profile'
       },
+      // document
       {
-        path:'blank',
-        component:BlankComponent,
-        title:'Angular Blank Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'document',
+        component:DocumentComponent,
+        title:'Emmaus Document'
       },
-      // support tickets
+      // program
       {
-        path:'invoice',
-        component:InvoicesComponent,
-        title:'Angular Invoice Details Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'programs',
+        component:ProgramsComponent,
+        title:'Emmaus Programs'
       },
+      // story
       {
-        path:'line-chart',
-        component:LineChartComponent,
-        title:'Angular Line Chart Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'impact-stories',
+        component:ImpactStoriesComponent,
+        title:'Emmaus Impact Stories'
       },
+      // create story
       {
-        path:'bar-chart',
-        component:BarChartComponent,
-        title:'Angular Bar Chart Dashboard | TailAdmin - Angular Admin Dashboard Template'
+        path:'create-impact-story',
+        component:CreateImpactStoryComponent,
+        title:'Emmaus Create Impact Story'
       },
+      // inquires
       {
-        path:'alerts',
-        component:AlertsComponent,
-        title:'Angular Alerts Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path:'avatars',
-        component:AvatarElementComponent,
-        title:'Angular Avatars Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path:'badge',
-        component:BadgesComponent,
-        title:'Angular Badges Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path:'buttons',
-        component:ButtonsComponent,
-        title:'Angular Buttons Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path:'images',
-        component:ImagesComponent,
-        title:'Angular Images Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
-      {
-        path:'videos',
-        component:VideosComponent,
-        title:'Angular Videos Dashboard | TailAdmin - Angular Admin Dashboard Template'
-      },
+        path:'inquires',
+        component:InquiresComponent,
+        title:'Emmaus Inquires'
+      }
     ]
   },
   // auth pages
   {
     path:'signin',
     component:SignInComponent,
-    title:'Angular Sign In Dashboard | TailAdmin - Angular Admin Dashboard Template'
+    title:'Emmaus Sign In '
   },
   {
     path:'signup',
     component:SignUpComponent,
-    title:'Angular Sign Up Dashboard | TailAdmin - Angular Admin Dashboard Template'
+    title:'Emmaus Sign Up '
   },
   {
     path:'forget-password',
     component:ForgetPasswordComponent,
-    title:'Forget Password'
+    title:'Emmaus Forget Password'
   },
   {
     path:'reset-password',
     component:ResetPasswordComponent,
-    title:'Reset Password'
+    title:'Emmaus Reset Password'
   },
   {
     path:'reset-email',
     component:ResetEmailComponent,
-    title:'Reset Email'
+    title:'Emmaus Reset Email'
   },
   {
     path:'change-temp-password',
     component:ChangeTempPasswordComponent,
-    title:'Change Temporary Password'
+    title:'Emmaus Change Temporary Password'
   },
   // error pages
   {
     path:'**',
     component:NotFoundComponent,
-    title:'Angular NotFound Dashboard | TailAdmin - Angular Admin Dashboard Template'
+    title:'Emmaus Not Found'
   },
 ];

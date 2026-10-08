@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ThemeService } from '../../../services/theme.service';
 import { CommonModule } from '@angular/common';
 
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 export class ThemeToggleButtonComponent {
   
   theme$;
+
+  @Input() size:number = 11;
 
   constructor(private themeService: ThemeService) {
     this.theme$ = this.themeService.theme$;
