@@ -54,7 +54,7 @@ public class InquiryService {
 
     /** getters ************************************************************** **/
     public PageResponse<InquiryResponse> getPagesOfInquiry(
-            String type, LocalDate fromDate, int page, int size
+            String type, LocalDate fromDate, String status, int page, int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -72,6 +72,11 @@ public class InquiryService {
         if (fromDate != null) {
             whereClause.append(" AND i.created_at::Date >= :fromDate");
             params.addValue("fromDate", fromDate);
+        }
+
+        if (status != null && !status.isEmpty()) {
+            whereClause.append(" AND LOWER(i.status) = :status");
+            params.addValue("status", status.toLowerCase());
         }
 
         // 2. Count Query (Must NOT have ORDER BY or LIMIT)

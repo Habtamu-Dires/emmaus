@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 import { SharedService } from '../../../shared/services/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  imports: [ButtonComponent, CommonModule, ModalComponent],
+  imports: [ButtonComponent, FormsModule, CommonModule, ModalComponent],
   selector: 'app-staff-profile',
   templateUrl: './staff-profile.component.html',
 })
@@ -30,6 +31,10 @@ export class StaffProfileComponent implements OnInit {
 
   // modals
   isDetailModalOpen = false;
+
+  //filter
+  nameFilter:string | undefined;
+  searchTerm:string | undefined;
 
   constructor(
     private api: Api,
@@ -51,6 +56,7 @@ export class StaffProfileComponent implements OnInit {
     this.api.invoke(getPagesOfStaffProfile, {
         page: page - 1,
         size: this.pageSize,
+        name: this.nameFilter
       })
       .then((res) => {
         if (res.content) {
@@ -114,6 +120,17 @@ export class StaffProfileComponent implements OnInit {
           this.deleteProfile(publicId)
         }
       });
+    }
+  }
+
+  // on name search
+  searchByName(){
+    if(this.searchTerm && this.searchTerm.length >= 3){
+      this.nameFilter = this.searchTerm;
+      this.loadPagesOfStaffProfile(1);
+    } else {
+      this.nameFilter = undefined;
+      this.loadPagesOfStaffProfile(1);
     }
   }
 

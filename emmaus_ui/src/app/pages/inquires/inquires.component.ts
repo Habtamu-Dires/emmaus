@@ -7,11 +7,13 @@ import { getPagesOfInquiries, updateInquiry } from '../../services/functions';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
+import { DatePickerComponent } from '../../shared/components/form/date-picker/date-picker.component';
+import { SelectComponent } from '../../shared/components/form/select/select.component';
 
 @Component({
   selector: 'app-inquires',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonComponent, ModalComponent],
+  imports: [CommonModule, FormsModule, ButtonComponent, ModalComponent, DatePickerComponent, SelectComponent],
   templateUrl: './inquires.component.html',
 })
 export class InquiresComponent implements OnInit {
@@ -36,6 +38,27 @@ export class InquiresComponent implements OnInit {
   // available statuses
   readonly statuses = ['NEW', 'SEEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'];
 
+  statusOptions = [
+    { value: 'ALL', label: 'ALL' },
+    { value: 'NEW', label: 'NEW' },
+    { value: 'SEEN', label: 'SEEN' },
+    { value: 'IN_PROGRESS', label: 'IN_PROGRESS' },
+    { value: 'RESOLVED', label: 'RESOLVED' },
+    { value: 'CLOSED', label: 'CLOSED' },
+  ];
+
+  typeOptions = [
+    { value: 'ALL', label: 'ALL' },
+    { value: 'General inquiry', label: 'General inquiry' },
+    { value: 'Partnership', label: 'Partnership' },
+    { value: 'Volunteer / Get involved', label: 'Volunteer / Get involved' },
+    { value: 'Donation question', label: 'Donation question' },
+  ];
+
+  statusFilter:string | undefined;
+  typeFilter:string | undefined;
+  dateFilter:string | undefined;
+
   constructor(
     private api: Api,
     private toastr: ToastrService,
@@ -53,6 +76,9 @@ export class InquiresComponent implements OnInit {
       .invoke(getPagesOfInquiries, {
         page: page - 1,
         size: this.pageSize,
+        type: this.typeFilter,
+        status: this.statusFilter,
+        from_date:this.dateFilter ? this.dateFilter : undefined,
       })
       .then((res) => {
         if (res.content) {
@@ -120,6 +146,31 @@ export class InquiresComponent implements OnInit {
         this.isUpdating = false;
         this.cdr.markForCheck();
       });
+  }
+
+  
+  onTypeFilter(type:string){
+    if(type === '' || type === 'ALL'){
+      this.typeFilter = undefined;
+    }else{
+      this.typeFilter = type;
+    }
+    this.loadInquires();
+  }
+
+  onStatusFilter(status:string){
+    if(status === '' || status === 'ALL'){
+      this.statusFilter = undefined;
+    }else{
+      this.statusFilter = status;
+    }
+    this.loadInquires();
+  }
+
+  onDaysSelectionChange(date:any) {
+    console.log('Selected date:', date.dateStr);
+      this.dateFilter = date.dateStr;
+      this.loadInquires();
   }
 
   // ─── Helpers ───────────────────────────────────────────────

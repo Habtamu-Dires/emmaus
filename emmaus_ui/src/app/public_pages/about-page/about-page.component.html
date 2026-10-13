@@ -1,0 +1,132 @@
+<!-- Hero -->
+<section class="bg-primary py-16 lg:py-20 dark:bg-primary-dark">
+  <div class="mx-auto max-w-7xl px-4 text-center lg:px-8">
+    <p class="text-sm font-medium uppercase tracking-wider text-white/70">Who We Are</p>
+    <h1 class="mt-2 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">About Emmaus Companions</h1>
+    <p class="mx-auto mt-4 max-w-2xl text-base text-white/80">
+      Protecting elders, women, children, and persons with specific needs in Bahir Dar, Ethiopia.
+    </p>
+  </div>
+</section>
+
+<!-- Vision / Mission / Established -->
+<section class="py-14 lg:py-16 bg-white dark:bg-gray-950">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+      <div class="rounded-2xl border border-gray-100 p-6 text-center shadow-sm dark:border-white/10 dark:bg-gray-800">
+        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20">
+          <svg class="h-10 w-10 text-primary dark:text-primary-light" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-primary dark:text-primary-light">Our Vision</h2>
+        <p class="mt-2 text-base font-medium text-text dark:text-gray-100">A Dignified Life for All</p>
+      </div>
+
+      <div class="rounded-2xl border border-gray-100 p-6 text-center shadow-sm dark:border-white/10 dark:bg-gray-800">
+        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-orange/10 dark:bg-orange/20">
+          <svg class="h-10 w-10 text-orange" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-orange">Our Mission</h2>
+        <p class="mt-2 text-base font-medium text-text dark:text-gray-100">Prevention & Support</p>
+      </div>
+
+      <div class="rounded-2xl border border-gray-100 p-6 text-center shadow-sm dark:border-white/10 dark:bg-gray-800">
+        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green/10 dark:bg-green/20">
+          <svg class="h-10 w-10 text-green" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-green">Established</h2>
+        <p class="mt-2 text-base font-medium text-text dark:text-gray-100">Since May 5, 2018 (E.C.)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our story -->
+<section class="py-14 bg-surface dark:bg-gray-900">
+  <div class="mx-auto max-w-3xl px-4 lg:px-8">
+    <h2 class="text-center text-2xl font-bold text-primary dark:text-primary-light sm:text-3xl">
+      Our Story
+    </h2>
+    <div class="mx-auto mt-3 h-1 w-16 rounded bg-orange"></div>
+    <div class="mt-8 space-y-4 text-base leading-relaxed text-text-muted dark:text-gray-400">
+      <p>
+        Emmaus Companions is a board-led humanitarian organization based in Bahir Dar, Ethiopia.
+        Guided by principles of dignity, justice, and compassion, we work to prevent violence,
+        respond to crises, and build resilient communities.
+      </p>
+      <p>
+        We stand with elders, women, children, and persons with specific needs—raising awareness,
+        offering protection and support, and advocating for lasting systemic change.
+      </p>
+      <p>
+        From prevention and emergency response to empowerment and policy advocacy, our programs
+        are rooted in the communities we serve and shaped by the people who lead them.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Founders teaser -->
+<section class="py-14 bg-white dark:bg-gray-950">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mb-10 text-center">
+      <h2 class="text-2xl font-bold text-primary dark:text-primary-light sm:text-3xl">Our Founders</h2>
+      <div class="mx-auto mt-3 h-1 w-16 rounded bg-orange"></div>
+    </div>
+
+    @if (isLoadingFounders) {
+      <div class="py-12 text-center text-text-muted dark:text-gray-400">Loading...</div>
+    } @else if (founders.length === 0) {
+      <div class="py-12 text-center text-text-muted dark:text-gray-400">Profiles coming soon.</div>
+    } @else {
+      <div class="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2">
+        @for (person of founders; track person.publicId) {
+          <div class="flex flex-col items-center text-center">
+            <div class="mb-4 h-40 w-40 overflow-hidden rounded-2xl bg-gray-100 shadow-md dark:bg-gray-700">
+              @if (person.profilePic) {
+                <img [src]="person.profilePic" [alt]="person.firstName" class="h-full w-full object-cover" />
+              } @else {
+                <div class="flex h-full w-full items-center justify-center text-3xl font-bold text-primary dark:text-primary-light">
+                  {{ person.firstName?.charAt(0) }}{{ person.lastName?.charAt(0) }}
+                </div>
+              }
+            </div>
+            <h3 class="text-lg font-semibold text-text dark:text-gray-100">
+              {{ person.firstName }} {{ person.lastName }}
+            </h3>
+            <p class="text-sm text-text-muted dark:text-gray-400">
+              {{ person.position || person.department || 'Board Member' }}
+            </p>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="mt-10 text-center">
+      <a routerLink="/governance" class="text-sm font-semibold text-primary hover:underline dark:text-primary-light">
+        Meet the full board & leadership →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="bg-primary py-12 dark:bg-primary-dark">
+  <div class="mx-auto max-w-7xl px-4 text-center lg:px-8">
+    <h2 class="text-2xl font-bold text-white">Join us in building hope</h2>
+    <div class="mt-6 flex flex-wrap justify-center gap-3">
+      <a routerLink="/objectives" class="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-primary hover:bg-white/90 dark:bg-gray-100 dark:text-primary-dark">
+        Our Objectives
+      </a>
+      <a routerLink="/contact" class="rounded-lg bg-orange px-6 py-3 text-sm font-semibold text-white hover:bg-orange-dark">
+        Contact Us
+      </a>
+    </div>
+  </div>
+</section>

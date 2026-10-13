@@ -3,7 +3,7 @@ import { CreateProgramRequest, ProgramResponse } from '../../services/models';
 import { Api } from '../../services/api';
 import { createProgram, deleteProgram, getPagesOfPrograms, updateProgram } from '../../services/functions';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
@@ -18,6 +18,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    FormsModule,
     ButtonComponent,
     ModalComponent,
     LabelComponent,
@@ -41,6 +42,10 @@ export class ProgramsComponent implements OnInit {
   // modal
   isModalOpen = false;
   isEditMode = false;
+
+  //filter
+  nameFilter:string | undefined;
+  searchTerm:string | undefined;
 
   constructor(
     private api: Api,
@@ -71,6 +76,7 @@ export class ProgramsComponent implements OnInit {
       .invoke(getPagesOfPrograms, {
         page: page - 1,
         size: this.pageSize,
+        name: this.nameFilter
       })
       .then((res) => {
         if (res.content) {
@@ -88,6 +94,17 @@ export class ProgramsComponent implements OnInit {
         this.isLoading = false;
         this.cdr.markForCheck();
       });
+  }
+
+  // on name search
+  searchByName(){
+    if(this.searchTerm && this.searchTerm.length >= 3){
+      this.nameFilter = this.searchTerm;
+      this.loadPrograms(1);
+    } else {
+      this.nameFilter = undefined;
+      this.loadPrograms(1);
+    }
   }
 
   goToPage(page: number) {

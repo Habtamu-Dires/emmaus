@@ -50,7 +50,7 @@ public class SecurityConfig {
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
 //                    .anyRequest().authenticated()
-                    .requestMatchers("/inequires/**").permitAll()
+                    .requestMatchers("/inquiries/**").permitAll()
                     .requestMatchers("/staff-profiles/pages").permitAll()
                     .requestMatchers("/documents/pages").permitAll()
                     .requestMatchers("/programs/pages").permitAll()

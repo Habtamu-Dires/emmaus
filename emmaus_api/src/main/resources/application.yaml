@@ -58,8 +58,8 @@ springdoc:
 s3:
   space-access-key: ${S3_SPACES_ACCESS_KEY:something}
   space-secret-key: ${S3_SPACES_SECRET_KEY:something}
-  space-endpoint: ${S3_SPACES_ENDPOINT:something}
-  bucket-name: ${S3_BUCKET_NAME:something}
+  space-endpoint: ${S3_SPACES_ENDPOINT:https://fra1.digitaloceanspaces.com}
+  bucket-name: ${S3_BUCKET_NAME:global-logistics-space}
   region: ${S3_REGION:fra1}
 
 app:

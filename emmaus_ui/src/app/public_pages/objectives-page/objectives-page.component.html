@@ -1,0 +1,55 @@
+<!-- Hero -->
+<section class="bg-primary py-16 lg:py-20 dark:bg-primary-dark">
+  <div class="mx-auto max-w-7xl px-4 text-center lg:px-8">
+    <p class="text-sm font-medium uppercase tracking-wider text-white/70">Our Focus</p>
+    <h1 class="mt-2 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">Our Objectives</h1>
+    <p class="mx-auto mt-4 max-w-2xl text-base text-white/80">
+      Four pillars guiding our work: prevention, response, empowerment, and systemic change.
+    </p>
+  </div>
+</section>
+
+<!-- Objectives detail -->
+<section class="py-14 lg:py-20 bg-surface dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      @for (obj of objectives; track obj.title) {
+        <article
+          class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-white/10 dark:bg-gray-800"
+        >
+          <div class="flex items-center gap-4 px-6 py-5 text-white" [ngClass]="headerClass(obj.color)">
+            <h2 class="text-xl font-bold">{{ obj.title }}</h2>
+          </div>
+          <div class="p-6">
+            <p class="text-sm leading-relaxed text-text-muted dark:text-gray-400">
+              {{ obj.short }}
+            </p>
+            <ul class="mt-5 space-y-2">
+              @for (item of obj.details; track item) {
+                <li class="flex items-start gap-2 text-sm text-text dark:text-gray-300">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange"></span>
+                  {{ item }}
+                </li>
+              }
+            </ul>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Link to programs -->
+<section class="py-12 bg-white dark:bg-gray-950">
+  <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
+    <p class="text-text-muted dark:text-gray-400">
+      These objectives come to life through our programs on the ground.
+    </p>
+    <a
+      routerLink="/programs"
+      class="mt-4 inline-block rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-light dark:bg-primary-light dark:hover:bg-primary"
+    >
+      Explore Our Programs →
+    </a>
+  </div>
+</section>

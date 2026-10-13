@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-public-footer',
@@ -9,4 +9,10 @@ import { RouterLink } from '@angular/router';
 })
 export class PublicFooterComponent {
   readonly currentYear = new Date().getFullYear();
+
+  constructor(private router:Router) {}
+
+  goToContactUs() {
+    this.router.navigate(['/contact']);
+  }
 }

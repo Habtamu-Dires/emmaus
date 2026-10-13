@@ -1,5 +1,5 @@
 import { ApplicationConfig, inject, Injector, provideAppInitializer, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter , withInMemoryScrolling} from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -11,7 +11,13 @@ import {provideToastr} from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-     provideRouter(routes),
+     provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top', // always go to top on navigation
+        anchorScrolling: 'enabled',       // still allows #fragments
+      })
+    ),
      provideAppInitializer(() => {
       const injector = inject(Injector);
       const environmentInitializer = injector.get(EnvironmentInitializerService);
@@ -34,6 +40,7 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-top-center',
       timeOut: 2000
     }),
+    
     
   ]
 };

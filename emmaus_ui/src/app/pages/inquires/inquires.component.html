@@ -6,6 +6,26 @@
         Inquiries
       </h4>
     </div>
+    <div class="flex items-center gap-2">
+      <app-date-picker
+        (dateChange)="onDaysSelectionChange($event)"
+        placeholder="Select Date"
+      ></app-date-picker>
+
+      <app-select
+        [options]="typeOptions"
+        placeholder="Select Type"
+        (valueChange)="onTypeFilter($event)"
+        className="dark:bg-dark-900"
+      ></app-select>
+
+      <app-select
+        [options]="statusOptions"
+        placeholder="Select Status"
+        (valueChange)="onStatusFilter($event)"
+        className="dark:bg-dark-900"
+      ></app-select>
+    </div>
   </div>
 
   <!-- Table -->
@@ -80,7 +100,7 @@
                 <td class="px-4 py-4 text-end">
                   <button
                     (click)="openDetail(inquiry)"
-                    class="text-gold text-xs font-bold hover:underline dark:text-blue-500"
+                    class="text-gold text-xs font-bold hover:underline text-blue-600 dark:text-blue-500"
                   >
                     View
                   </button>
@@ -148,7 +168,7 @@
       <div
         class="px-6 py-5 border-b border-gray-200 dark:border-gray-800 sticky top-0 bg-white dark:bg-gray-900 rounded-t-3xl z-10"
       >
-        <div class="flex items-start justify-between gap-4">
+        <div class="flex items-start justify-start gap-2">
           <div>
             <h4 class="text-xl font-bold text-gray-900 dark:text-white">
               {{ selectedInquiry.subject || 'Inquiry' }}

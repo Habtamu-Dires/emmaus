@@ -40,10 +40,11 @@ public class InquiryController {
     public ResponseEntity<PageResponse<InquiryResponse>> getPagesOfInquiries(
             @RequestParam(name = "type", required = false) String type,
             @RequestParam(name = "from_date", required = false)LocalDate fromDate,
+            @RequestParam(name = "status", required = false)String status,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ){
-        var res = inquiryService.getPagesOfInquiry(type, fromDate,page, size);
+        var res = inquiryService.getPagesOfInquiry(type, fromDate, status,page, size);
         return ResponseEntity.ok(res);
     }
 }

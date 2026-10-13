@@ -34,8 +34,8 @@
     <div class="hidden lg:block">
       
       <a
-        routerLink="/contact"
-        class="rounded-lg bg-orange px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-orange-100)]"
+        routerLink="/contact" [queryParams]="{ type: 'VOLUNTEER' }"
+        class="cursor-pointer rounded-lg bg-orange px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-dark"
       >
         Get Involved
       </a>

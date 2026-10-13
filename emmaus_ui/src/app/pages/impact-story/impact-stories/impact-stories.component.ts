@@ -11,11 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ModalComponent } from '../../../shared/components/ui/modal/modal.component';
 import { YoutubePlayerComponent } from '../../../shared/components/youtube-player/youtube-player.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-impact-stories',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, ModalComponent, YoutubePlayerComponent],
+  imports: [CommonModule, ButtonComponent, ModalComponent, YoutubePlayerComponent,FormsModule],
   templateUrl: './impact-stories.component.html',
 })
 export class ImpactStoriesComponent implements OnInit {
@@ -30,6 +31,10 @@ export class ImpactStoriesComponent implements OnInit {
   pageSize = 10;
   totalElements = 0;
   isLoading = true;
+
+  // filter
+  nameFilter:string | undefined;
+  searchTerm:string | undefined;
 
   constructor(
     private api: Api,
@@ -50,6 +55,7 @@ export class ImpactStoriesComponent implements OnInit {
       .invoke(getPagesOfImpactStories, {
         page: page - 1,
         size: this.pageSize,
+        name: this.nameFilter
       })
       .then((res) => {
         if (res.content) {
@@ -103,6 +109,17 @@ export class ImpactStoriesComponent implements OnInit {
           }
         });
       }
+  }
+
+  // on name search
+  searchByName(){
+    if(this.searchTerm && this.searchTerm.length >= 3){
+      this.nameFilter = this.searchTerm;
+      this.loadImpactStories(1);
+    } else {
+      this.nameFilter = undefined;
+      this.loadImpactStories(1);
+    }
   }
 
   goToPage(page: number) {

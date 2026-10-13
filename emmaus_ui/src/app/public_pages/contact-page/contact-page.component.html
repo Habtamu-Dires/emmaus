@@ -1,0 +1,344 @@
+<!-- Hero -->
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0">
+    <img
+      src="images/hero/contact-bahir-dar.jpg"
+      alt="Bahir Dar"
+      class="h-full w-full object-cover"
+      onerror="this.style.display='none'"
+    />
+    <div class="absolute inset-0 bg-primary/75 dark:bg-primary-dark/85"></div>
+  </div>
+  <div class="relative mx-auto max-w-7xl px-4 py-16 text-center lg:px-8 lg:py-20">
+    <h1 class="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+      Contact & Partnerships
+    </h1>
+    <p class="mx-auto mt-3 max-w-xl text-base text-white/85">
+      Let's work together to make a difference.
+    </p>
+  </div>
+</section>
+
+<!-- Get in touch + Map -->
+<section class="py-14 lg:py-16 bg-white dark:bg-gray-950">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+      <!-- Contact card -->
+      <div>
+        <h2 class="text-xl font-bold text-primary dark:text-primary-light">Get In Touch</h2>
+        <div class="mx-auto mt-2 mb-6 h-1 w-12 rounded bg-orange lg:mx-0"></div>
+
+        <div
+          class="rounded-2xl border border-gray-100 bg-surface p-6 shadow-sm dark:border-white/10 dark:bg-gray-800"
+        >
+          <div class="space-y-5">
+            <div class="flex gap-3">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20">
+                <svg class="h-5 w-5 text-primary dark:text-primary-light" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase text-text-muted dark:text-gray-500">Phone</p>
+                <a href="tel:+251944466364" class="text-sm font-medium text-text dark:text-gray-100">+251 944 466 364</a>
+                <br />
+                <a href="tel:+251918674374" class="text-sm font-medium text-text dark:text-gray-100">+251 918 674 374</a>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange/10 dark:bg-orange/20">
+                <svg class="h-5 w-5 text-orange" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase text-text-muted dark:text-gray-500">Email</p>
+                <a href="mailto:endalamawtm@gmail.com" class="text-sm font-medium text-text dark:text-gray-100">
+                  endalamawtm@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green/10 dark:bg-green/20">
+                <svg class="h-5 w-5 text-green" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase text-text-muted dark:text-gray-500">Office hours</p>
+                <p class="text-sm font-medium text-text dark:text-gray-100">Monday – Friday</p>
+                <p class="text-sm text-text-muted dark:text-gray-400">9:00 AM – 5:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            <button
+              type="button"
+              (click)="openForm('GENERAL', 'General inquiry')"
+              class="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary-light"
+            >
+              Send Message →
+            </button>
+            <button
+              type="button"
+              (click)="openDonate()"
+              class="rounded-lg bg-orange px-4 py-2.5 text-sm font-medium text-white transition hover:bg-orange-dark"
+            >
+              Donate
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div>
+        <h2 class="text-xl font-bold text-primary dark:text-primary-light">Visit Us in Bahir Dar</h2>
+        <div class="mx-auto mt-2 mb-6 h-1 w-12 rounded bg-orange lg:mx-0"></div>
+
+        <div class="overflow-hidden rounded-2xl border border-gray-100 shadow-sm dark:border-white/10">
+          <!-- OpenStreetMap embed – no API key. Adjust lat/lon if you have exact coords. -->
+          <iframe
+            title="Emmaus Companions Office – Bahir Dar"
+            class="h-64 w-full border-0 sm:h-72"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=37.35%2C11.55%2C37.45%2C11.65&layer=mapnik&marker=11.5937%2C37.3905"
+          ></iframe>
+          <div class="bg-primary px-4 py-3 text-sm text-white dark:bg-primary-dark">
+            <p class="font-medium">Bahir Dar, Amhara Region, Ethiopia</p>
+            <p class="text-white/80 text-xs mt-0.5">Located near Lake Tana</p>
+          </div>
+        </div>
+        <p class="mt-2 text-xs text-text-muted dark:text-gray-500">
+          <a
+            href="https://www.openstreetmap.org/?mlat=11.5937&mlon=37.3905#map=14/11.5937/37.3905"
+            target="_blank"
+            rel="noopener"
+            class="text-primary hover:underline dark:text-primary-light"
+          >
+            Open larger map →
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partner with us -->
+<section class="py-14 bg-surface dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <div class="mb-10 text-center">
+      <h2 class="text-2xl font-bold text-primary dark:text-primary-light sm:text-3xl">
+        Partner With Us
+      </h2>
+      <p class="mt-2 text-sm text-text-muted dark:text-gray-400">
+        Join us in creating sustainable change and hope.
+      </p>
+      <div class="mx-auto mt-3 h-1 w-16 rounded bg-orange"></div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      @for (opt of partnerOptions; track opt.title) {
+        <div
+          class="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-white/10 dark:bg-gray-800"
+        >
+          <div class="px-4 py-4 text-white" [ngClass]="headerClass(opt.color)">
+            <h3 class="font-bold text-sm sm:text-base">{{ opt.title }}</h3>
+          </div>
+          <div class="flex flex-1 flex-col p-4">
+            <p class="flex-1 text-sm text-text-muted dark:text-gray-400">{{ opt.description }}</p>
+            <button
+              type="button"
+              (click)="openForm(opt.type, opt.title)"
+              class="mt-4 rounded-lg px-3 py-2 text-sm font-medium text-white transition"
+              [ngClass]="btnClass(opt.color)"
+            >
+              Learn More →
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="mt-8 text-center">
+      <button
+        type="button"
+        (click)="openForm('PARTNERSHIP', 'Become a Partner')"
+        class="rounded-lg bg-orange px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-dark"
+      >
+        Become a Partner
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Inquiry form (shown when user clicks Send Message / Partner / Get Involved) -->
+@if (showForm) {
+  <section id="inquiry-form" class="py-14 bg-white dark:bg-gray-950 scroll-mt-24">
+    <div class="mx-auto max-w-xl px-4 lg:px-8">
+      <h2 class="text-2xl font-bold text-primary dark:text-primary-light text-center">
+        Send a Message
+      </h2>
+      <p class="mt-2 text-center text-sm text-text-muted dark:text-gray-400">
+        Tell us how you’d like to connect—we’ll respond as soon as we can.
+      </p>
+
+      <form [formGroup]="inquiryForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-5">
+        <div>
+          <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+            Full name <span class="text-error-500">*</span>
+          </label>
+          <input
+            type="text"
+            formControlName="senderName"
+            class="w-full rounded-lg border bg-transparent p-2.5 text-sm dark:bg-gray-900 dark:text-white"
+            [ngClass]="isInvalid('message') ? 'border-error-500': 'dark:border-gray-600 border-gray-300'"
+          />
+          @if (isInvalid('senderName')) {
+            <p class="mt-1 text-xs text-error-500">Name is required</p>
+          }
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+              Email <span class="text-error-500">*</span>
+            </label>
+            <input
+              type="email"
+              formControlName="senderEmail"
+              class="w-full rounded-lg border bg-transparent p-2.5 text-sm dark:bg-gray-900 dark:text-white"
+              [ngClass]="isInvalid('message') ? 'border-error-500': 'dark:border-gray-600 border-gray-300'"
+            />
+            @if (isInvalid('senderEmail')) {
+              <p class="mt-1 text-xs text-error-500">Valid email required</p>
+            }
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+              Phone
+            </label>
+            <input
+              type="tel"
+              formControlName="senderPhone"
+              class="w-full rounded-lg border border-gray-300 bg-transparent p-2.5 text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+            Type
+          </label>
+          <select
+            formControlName="type"
+            class="w-full rounded-lg border border-gray-300 bg-transparent p-2.5 text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+          >
+            <option value="GENERAL">General inquiry</option>
+            <option value="PARTNERSHIP">Partnership</option>
+            <option value="VOLUNTEER">Volunteer / Get involved</option>
+            <option value="DONATION">Donation question</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+            Subject <span class="text-error-500">*</span>
+          </label>
+          <input
+            type="text"
+            formControlName="subject"
+            class="w-full rounded-lg border bg-transparent p-2.5 text-sm dark:bg-gray-900 dark:text-white"
+            [ngClass]="isInvalid('message') ? 'border-error-500': 'dark:border-gray-600 border-gray-300'"
+          />
+        </div>
+
+        <div>
+          <label class="mb-1 block text-xs font-semibold uppercase text-text-muted dark:text-gray-500">
+            Message <span class="text-error-500">*</span>
+          </label>
+          <textarea
+            formControlName="message"
+            rows="4"
+            placeholder="How would you like to get involved or partner with us?"
+            class="w-full rounded-lg border bg-transparent p-2.5 text-sm  dark:bg-gray-900 dark:text-white"
+            [ngClass]="isInvalid('message') ? 'border-error-500': 'dark:border-gray-600 border-gray-300'"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button
+            type="submit"
+            [disabled]="isSubmitting"
+            class="rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-light disabled:opacity-60"
+          >
+            {{ isSubmitting ? 'Sending...' : 'Send message' }}
+          </button>
+          <button
+            type="button"
+            (click)="showForm = false"
+            class="rounded-lg border border-gray-200 px-6 py-2.5 text-sm font-medium text-text dark:border-white/10 dark:text-gray-300"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+}
+
+<!-- Donate modal (bank accounts) -->
+@if (isDonateOpen) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" (click)="closeDonate()"></div>
+    <div
+      class="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900"
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        type="button"
+        (click)="closeDonate()"
+        class="absolute right-4 top-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <h3 class="text-xl font-bold text-primary dark:text-primary-light">Donate</h3>
+      <p class="mt-1 text-sm text-text-muted dark:text-gray-400">
+        Support our work via bank transfer. Online payments (Chapa) coming soon.
+      </p>
+
+      <div class="mt-6 space-y-4">
+        @for (acc of bankAccounts; track acc.accountNumber) {
+          <div class="rounded-xl border border-gray-100 bg-surface p-4 dark:border-white/10 dark:bg-gray-800">
+            <p class="text-sm font-semibold text-text dark:text-gray-100">{{ acc.bank }}</p>
+            <p class="mt-1 text-xs text-text-muted dark:text-gray-400">Account name</p>
+            <p class="text-sm font-medium text-text dark:text-gray-200">{{ acc.accountName }}</p>
+            <p class="mt-2 text-xs text-text-muted dark:text-gray-400">Account number</p>
+            <p class="text-sm font-mono font-semibold text-primary dark:text-primary-light">
+              {{ acc.accountNumber }}
+            </p>
+            @if (acc.branch) {
+              <p class="mt-1 text-xs text-text-muted dark:text-gray-500">Branch: {{ acc.branch }}</p>
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        type="button"
+        (click)="openForm('DONATION', 'Donation inquiry'); closeDonate()"
+        class="mt-4 w-full rounded-lg border border-primary py-2.5 text-sm font-medium text-primary dark:border-primary-light dark:text-primary-light"
+      >
+        Questions about donating? Contact us
+      </button>
+    </div>
+  </div>
+}

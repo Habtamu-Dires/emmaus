@@ -56,7 +56,7 @@ public class Inquiry {
         inquiry.status = status;
         inquiry.remark = remark;
         inquiry.createdAt = Instant.now();
-
+        inquiry.updatedAt = Instant.now();
         return inquiry;
     }
 

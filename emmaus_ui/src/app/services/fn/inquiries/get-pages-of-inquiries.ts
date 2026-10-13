@@ -12,6 +12,7 @@ import { PageResponseInquiryResponse } from '../../models/page-response-inquiry-
 export interface GetPagesOfInquiries$Params {
   type?: string;
   from_date?: string;
+  status?: string;
   page?: number;
   size?: number;
 }
@@ -21,6 +22,7 @@ export function getPagesOfInquiries(http: HttpClient, rootUrl: string, params?: 
   if (params) {
     rb.query('type', params.type, {});
     rb.query('from_date', params.from_date, {});
+    rb.query('status', params.status, {});
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
   }

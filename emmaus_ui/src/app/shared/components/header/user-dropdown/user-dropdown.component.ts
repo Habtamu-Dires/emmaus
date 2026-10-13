@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../../services/auth-service/auth.service';
+import { UserProfile } from '../../../../services/models';
 
 export interface Language {
   id: string;
@@ -21,6 +22,8 @@ export class UserDropdownComponent implements OnInit {
   isOpen = false;
   subDropdownOpen = false;
   currentLocale = 'en';
+
+  userProfile: UserProfile | undefined;
 
   languages: Language[] = [
     {
@@ -64,6 +67,8 @@ export class UserDropdownComponent implements OnInit {
       this.currentLocale = 'en';
       document.documentElement.setAttribute('dir', 'ltr');
     }
+    //user profiel
+    this.userProfile = this.authService.profile;
   }
 
   get currentLang(): Language {

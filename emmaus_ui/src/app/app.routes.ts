@@ -37,6 +37,11 @@ import { ProgramsPageComponent } from './public_pages/programs-page/programs-pag
 import { ImpactStoriesPageComponent } from './public_pages/impact-stories-page/impact-stories-page.component';
 import { ImpactStoryDetailComponent } from './public_pages/impact-story-detail/impact-story-detail.component';
 import { ResourcesPageComponent } from './public_pages/resources-page/resources-page.component';
+import { AboutPageComponent } from './public_pages/about-page/about-page.component';
+import { ObjectivesPageComponent } from './public_pages/objectives-page/objectives-page.component';
+import { GovernancePageComponent } from './public_pages/governance-page/governance-page.component';
+import { ContactPageComponent } from './public_pages/contact-page/contact-page.component';
+import { AdminsTableComponent } from './pages/admins-table/admin-table.component';
 
 export const routes: Routes = [
   // app.routes.ts (public part)
@@ -69,9 +74,27 @@ export const routes: Routes = [
       component:ResourcesPageComponent,
       title: 'Resources'
      },
-
-
-  ],
+     { 
+      path: 'about',
+      component:AboutPageComponent,
+      title: 'About Us'
+     },
+     { 
+      path: 'objectives',
+      component:ObjectivesPageComponent,
+      title: 'Our Objectives'
+     },
+     { 
+      path: 'governance',
+      component:GovernancePageComponent,
+      title: 'Our Governance'
+     },
+     { 
+      path: 'contact',
+      component:ContactPageComponent,
+      title: 'Contact Us'
+     },
+   ],
   },
   {
     path:'admin',
@@ -90,6 +113,11 @@ export const routes: Routes = [
         path:'change-password',
         component:ChangePasswordComponent,
         title:'Change Password',
+      },
+       {
+        path:'admins',
+        component:AdminsTableComponent,
+        title:'Admins'
       },
       {
         path:'profile',

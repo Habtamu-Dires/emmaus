@@ -41,7 +41,7 @@ public class AppUserService {
     private final ResetService resetService;
 
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @Transactional
     public TextDto createUser(CreateUserRequest req){
             checkUserEmail(req.email());
@@ -74,7 +74,7 @@ public class AppUserService {
         return new TextDto(savedUser.getPublicId().toString());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public void addRemark(UUID publicId, String remark){
         AppUser user = userRepo.findByPublicId(publicId)
                 .orElseThrow(()-> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -83,7 +83,7 @@ public class AppUserService {
         userRepo.save(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public UserProfile getUserByPhone(String phone){
         AppUser userIdentity = userRepo.findByEmail(phone)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -135,7 +135,7 @@ public class AppUserService {
         userRepo.save(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public void verifyPhone(UUID publicId) {
         AppUser user = userRepo.findByPublicId(publicId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -143,7 +143,7 @@ public class AppUserService {
         userRepo.save(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public void reject(UUID publicId) {
         AppUser user = userRepo.findByPublicId(publicId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -151,7 +151,7 @@ public class AppUserService {
         userRepo.save(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public void  deleteUserIdentity(UUID publicId) {
         AppUser user = userRepo.findByPublicId(publicId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -167,7 +167,7 @@ public class AppUserService {
         Pageable pageable = PageRequest.of(page, size);
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        String baseSql = "FROM user_identity u";
+        String baseSql = "FROM app_user u";
 
         // 1. Build the Dynamic WHERE clause
         StringBuilder whereClause = new StringBuilder(" WHERE 1=1 ");
@@ -221,69 +221,6 @@ public class AppUserService {
     }
 
     // filter users
-    public PageResponse<UserResponse> filterUsers(UUID branchId, String name, String phone, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        MapSqlParameterSource params = new MapSqlParameterSource();
-
-        String baseSql = """
-                FROM user_identity u 
-                JOIN user_assignment ua ON u.id = ua.user_id
-                JOIN user_role ur ON ur.id = ua.role_id
-                JOIN branch b ON b.id = ua.branch_id
-                """;
-
-        // 1. Build the Dynamic WHERE clause
-        StringBuilder whereClause = new StringBuilder(" WHERE 1=1 ");
-
-        if(branchId != null){
-            whereClause.append(" AND b.public_id = :branchPublicId");
-            params.addValue("branchPublicId", branchId);
-        }
-
-        if (phone != null && !phone.isEmpty()) {
-            whereClause.append(" AND LOWER(u.email) LIKE :email");
-            params.addValue("email", "%" + phone.toLowerCase() + "%");
-        }
-
-        if (name != null && !name.isEmpty()) {
-            whereClause.append(" AND LOWER(u.first_name) LIKE :name");
-            params.addValue("name", "%" + name.toLowerCase() + "%");
-        }
-
-
-        // 2. Count Query (Must NOT have ORDER BY or LIMIT)
-        String countSql = "SELECT COUNT(*) " + baseSql + whereClause;
-        Long total = namedParameterJdbcTemplate.queryForObject(countSql, params, Long.class);
-
-        if (total == null || total == 0) {
-            return PageResponse.toPage(List.of(), 0, pageable);
-        }
-
-        // 3. Data Query (Add Order and Pagination)
-        String pagination = " ORDER BY u.created_at DESC LIMIT :limit OFFSET :offset";
-        params.addValue("limit", size);
-        params.addValue("offset", pageable.getOffset());
-
-        String dataSql = """
-                SELECT 
-                    u.public_id, u.first_name, u.last_name, u.email, ur.name , ua.discipline
-                """
-                + baseSql + whereClause + pagination;
-
-        List<UserResponse> content = namedParameterJdbcTemplate.query(dataSql,params,
-                (rs,rowNum) -> UserResponse.builder()
-                        .publicId(UUID.fromString(rs.getString("public_id")))
-                        .name(rs.getString("first_name") + " "
-                                + rs.getString("last_name"))
-                        .phone(rs.getString("email"))
-                        .role(rs.getString("name"))
-                        .discipline(rs.getString("discipline"))
-                        .build()
-        );
-
-        return PageResponse.toPage(content,total,pageable);
-
-    }
 
 
     /** helper methods **/

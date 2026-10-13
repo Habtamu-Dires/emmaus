@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RequestMapping("/identity")
 @Tag(name = "identity")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('SUPER_ADMIN')")
 public class AppUserController {
 
     private final AppUserService identityService;
@@ -113,18 +115,6 @@ public class AppUserController {
     @GetMapping("/{email}")
     public ResponseEntity<UserProfile> getUserByPhone(@PathVariable String phone){
         UserProfile res = identityService.getUserByPhone(phone);
-        return ResponseEntity.ok(res);
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<PageResponse<UserResponse>> filterUsers(
-            @RequestParam(required = false) UUID branchId,
-            @RequestParam(required = false) String phone,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size
-    ){
-        var res = identityService.filterUsers(branchId,name,phone,page,size);
         return ResponseEntity.ok(res);
     }
 

@@ -3,7 +3,7 @@ import { Api } from '../../services/api';
 import { CreateDocumentRequest, DocumentResponse } from '../../services/models';
 import { createDocument, deleteDocument, getPagesOfDocuments, updateDocument } from '../../services/functions';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/ui/button/button.component';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, ModalComponent, LabelComponent, FileUploaderComponent],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, ButtonComponent, ModalComponent, LabelComponent, FileUploaderComponent],
   selector: 'app-document',
   templateUrl: './document.component.html',
 })
@@ -35,6 +35,10 @@ export class DocumentComponent implements OnInit{
   // modal 
   isModalOpen = false;
   isEditMode = false;
+
+  //filter
+  titleFilter:string | undefined;
+  searchTerm:string | undefined;
 
   constructor(
     private api:Api,
@@ -106,7 +110,12 @@ export class DocumentComponent implements OnInit{
   loadDocuments(page: number = 1) {
     this.isLoading = true;
     this.api
-      .invoke(getPagesOfDocuments, { page: page - 1, size: this.pageSize })
+      .invoke(getPagesOfDocuments, { 
+        page: page - 1, 
+        size: this.pageSize ,
+        title: this.titleFilter
+        
+      })
       .then((res) => {
         if (res.content) {
           this.documents = res.content;
@@ -230,5 +239,17 @@ export class DocumentComponent implements OnInit{
           }
         });
       }
+  }
+
+  // on name search
+  searchByTitle(){
+    if(this.searchTerm && this.searchTerm.length >= 3){
+      this.titleFilter = this.searchTerm;
+      this.loadDocuments(1);
+    } else {
+      this.titleFilter = undefined;
+      this.loadDocuments(1);
     }
+  }
+
 }
