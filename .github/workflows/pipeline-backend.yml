@@ -19,6 +19,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Create local key files from secrets
+        run: |
+          mkdir -p emmaus_api/src/main/resources/local-only
+          echo "${{ secrets.JWT_PRIVATE_KEY }}" > emmaus_api/src/main/resources/local-only/private_key.pem
+          echo "${{ secrets.JWT_PUBLIC_KEY }}" > emmaus_api/src/main/resources/local-only/public_key.pem
+
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v3
 
