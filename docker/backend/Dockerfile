@@ -31,6 +31,11 @@ RUN apk add --no-cache tzdata && \
 # Copy the JAR from build stage
 COPY --from=build /build/target/app.jar /app/app.jar
 
+# --- FIX: Copy keys directly into the final runtime container ---
+RUN mkdir -p /etc/keys
+COPY src/main/resources/local-only/private_key.pem /etc/keys/private_key.pem
+COPY src/main/resources/local-only/public_key.pem /etc/keys/public_key.pem
+
 EXPOSE 8088
 
 # JVM options optimized for containers
