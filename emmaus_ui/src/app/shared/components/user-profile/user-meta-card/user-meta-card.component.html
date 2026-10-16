@@ -61,21 +61,44 @@
         Update your details to keep your profile up-to-date.
       </p>
     </div>
-    <form class="flex flex-col">
-      <div class="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
+    <form [formGroup]="userProfileForm" (ngSubmit)="handleSave()"
+      class="flex flex-col">
+      <div class="custom-scrollbar h-112.5 overflow-y-auto px-2 pb-3">
         <div class="mt-7">
           <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
             Personal Information
           </h5>
           <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-            <div class="col-span-2 lg:col-span-1">
-              <label>First Name</label>
-              <app-input-field type="text" [(value)]="user.firstName" />
+            <div>
+              <app-label>
+                First Name <span class="text-error-500">*</span>
+              </app-label>
+              <input
+                type="text"
+                formControlName="firstName"
+                placeholder="First name"
+                class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                [ngClass]="isInvalid('firstName') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+              />
+              @if (isInvalid('firstName')) {
+                <p class="mt-1 text-xs text-error-500">Name is required</p>
+              }
             </div>
-            <div class="col-span-2 lg:col-span-1">
-              <label>Last Name</label>
-              <app-input-field type="text" [(value)]="user.lastName" />
-            </div>
+            <div>
+                <app-label>
+                  Last Name <span class="text-error-500">*</span>
+                </app-label>
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  placeholder="First name"
+                  class="w-full rounded-lg dark:text-gray-100 p-2.5 border text-sm focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-900"
+                  [ngClass]="isInvalid('lastName') ? 'border-error-500' : 'border-gray-300 dark:border-gray-600'"
+                />
+                @if (isInvalid('lastName')) {
+                  <p class="mt-1 text-xs text-error-500">Name is required</p>
+                }
+              </div>
           </div>
         </div>
       </div>
@@ -87,12 +110,12 @@
         >
           Close
         </app-button>
-        <app-button
-          size="sm"
-          (btnClick)="handleSave()"
+        <button
+          type="submit"
+          class="p-2 rounded-xl px-3 bg-brand-500 hover:bg-brand-800 text-white cursor-pointer disabled:cursor-not-allowed"
         >
           Save Changes
-        </app-button>
+        </button>
       </div>
     </form>
   </div>

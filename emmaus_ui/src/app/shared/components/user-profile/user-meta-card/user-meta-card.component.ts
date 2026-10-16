@@ -4,21 +4,25 @@ import { InputFieldComponent } from '../../form/input/input-field.component';
 
 import { ModalComponent } from '../../ui/modal/modal.component';
 import { ButtonComponent } from '../../ui/button/button.component';
-import { FormsModule } from '@angular/forms';
-import { UserProfile } from '../../../../services/models';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UpdateUserProfileRequest, UserProfile } from '../../../../services/models';
 import { AuthService } from '../../../../services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Api } from '../../../../services/api';
 import { updateUserProfile } from '../../../../services/functions';
+import { CommonModule } from '@angular/common';
+import { LabelComponent } from '../../form/label/label.component';
 
 @Component({
   selector: 'app-user-meta-card',
   imports: [
     ModalComponent,
-    InputFieldComponent,
     ButtonComponent,
     FormsModule,
-  ],
+    ReactiveFormsModule,
+    CommonModule,
+    LabelComponent
+],
   templateUrl: './user-meta-card.component.html',
   styles: ``
 })
@@ -28,13 +32,22 @@ export class UserMetaCardComponent {
 
   isOpen = false;
 
+  userProfileForm:FormGroup;
+
   constructor(
     public modal: ModalService,
     private authService: AuthService,
     private api:Api,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private fb:FormBuilder
   ) {
     this.user = this.authService.profile as UserProfile;
+
+    this.userProfileForm = this.fb.group({
+      firstName: [this.user.firstName, [Validators.required]],
+      lastName: [this.user.lastName, [Validators.required]],
+      profilePic: [this.user.profilePic]
+    })
   }
 
   
@@ -42,12 +55,20 @@ export class UserMetaCardComponent {
   closeModal() { this.isOpen = false; }  
 
   handleSave() {
-    this.updateProfile();
-    this.isOpen = false;
+    if(this.userProfileForm.valid){
+      const request:UpdateUserProfileRequest = this.userProfileForm.value;
+      this.updateProfile(this.user.publicId,request);
+    } else {
+      this.userProfileForm.markAllAsTouched();
+    }
+    
   }
 
-  updateProfile(){
-    this.api.invoke(updateUserProfile,{body:this.user}).then(res=>{
+  updateProfile(publicId:string, request:UpdateUserProfileRequest){
+    this.api.invoke(updateUserProfile,{
+      'public-id':publicId,
+      body:request
+    }).then(res=>{
       this.user = res as UserProfile;
       this.toastr.success('Profile updated successfully');
       this.closeModal();
@@ -61,5 +82,10 @@ export class UserMetaCardComponent {
     }).finally(()=>{
       this.isOpen = false;
     })
+  }
+
+  isInvalid(controlName: string): boolean {
+    const control = this.userProfileForm.get(controlName);
+    return !!control && control.invalid && control.touched;
   }
 }

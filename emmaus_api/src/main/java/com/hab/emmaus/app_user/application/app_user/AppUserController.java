@@ -1,6 +1,7 @@
 package com.hab.emmaus.app_user.application.app_user;
 
 
+import com.hab.emmaus.app_user.application.app_user.dto.UpdateUserProfileRequest;
 import com.hab.emmaus.app_user.application.dto.TextDto;
 import com.hab.emmaus.app_user.application.app_user.dto.CreateUserRequest;
 import com.hab.emmaus.app_user.application.app_user.dto.UserProfile;
@@ -75,9 +76,12 @@ public class AppUserController {
         return ResponseEntity.accepted().build();
     }
 
-    @PutMapping
-    public ResponseEntity<UserProfile> updateUserProfile(@RequestBody @Valid UserProfile profile){
-        UserProfile res = identityService.updateProfile(profile);
+    @PutMapping("/update/{public-id}")
+    public ResponseEntity<UserProfile> updateUserProfile(
+            @PathVariable("public-id") UUID publicId,
+            @RequestBody @Valid UpdateUserProfileRequest request
+    ){
+        UserProfile res = identityService.updateProfile(publicId,request);
         return ResponseEntity.ok(res);
     }
 

@@ -7,15 +7,18 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UpdateUserProfileRequest } from '../../models/update-user-profile-request';
 import { UserProfile } from '../../models/user-profile';
 
 export interface UpdateUserProfile$Params {
-      body: UserProfile
+  'public-id': string;
+      body: UpdateUserProfileRequest
 }
 
 export function updateUserProfile(http: HttpClient, rootUrl: string, params: UpdateUserProfile$Params, context?: HttpContext): Observable<StrictHttpResponse<UserProfile>> {
   const rb = new RequestBuilder(rootUrl, updateUserProfile.PATH, 'put');
   if (params) {
+    rb.path('public-id', params['public-id'], {});
     rb.body(params.body, 'application/json');
   }
 
@@ -29,4 +32,4 @@ export function updateUserProfile(http: HttpClient, rootUrl: string, params: Upd
   );
 }
 
-updateUserProfile.PATH = '/identity';
+updateUserProfile.PATH = '/identity/update/{public-id}';

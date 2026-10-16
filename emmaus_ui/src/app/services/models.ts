@@ -24,7 +24,6 @@ export type { PageResponseInquiryResponse } from './models/page-response-inquiry
 export type { PageResponseProgramResponse } from './models/page-response-program-response';
 export type { PageResponseStaffProfileResponse } from './models/page-response-staff-profile-response';
 export type { PageResponseUserProfile } from './models/page-response-user-profile';
-export type { PageResponseUserResponse } from './models/page-response-user-response';
 export type { PreSignedUrlDto } from './models/pre-signed-url-dto';
 export type { ProgramResponse } from './models/program-response';
 export type { RefreshRequest } from './models/refresh-request';
@@ -33,5 +32,5 @@ export type { ResetPasswordRequest } from './models/reset-password-request';
 export type { StaffProfileResponse } from './models/staff-profile-response';
 export type { TextDto } from './models/text-dto';
 export type { UpdateInquiryRequest } from './models/update-inquiry-request';
+export type { UpdateUserProfileRequest } from './models/update-user-profile-request';
 export type { UserProfile } from './models/user-profile';
-export type { UserResponse } from './models/user-response';

@@ -147,54 +147,6 @@
                 }
             }
         },
-        "/identity": {
-            "get": {
-                "tags": [
-                    "identity"
-                ],
-                "operationId": "getUserProfile",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserProfile"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "identity"
-                ],
-                "operationId": "updateUserProfile",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserProfile"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserProfile"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/identity/verify-email/{public-id}": {
             "put": {
                 "tags": [
@@ -219,6 +171,47 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/update/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "updateUserProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserProfileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
                                 }
                             }
                         }
@@ -1266,6 +1259,26 @@
                 }
             }
         },
+        "/identity": {
+            "get": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "getUserProfile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/identity/{email}": {
             "get": {
                 "tags": [
@@ -1357,73 +1370,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/PageResponseUserProfile"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/identity/filter": {
-            "get": {
-                "tags": [
-                    "identity"
-                ],
-                "operationId": "filterUsers",
-                "parameters": [
-                    {
-                        "name": "branchId",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    },
-                    {
-                        "name": "phone",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 0
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 10
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PageResponseUserResponse"
                                 }
                             }
                         }
@@ -1700,6 +1646,20 @@
                     "displayOrder": {
                         "type": "integer",
                         "format": "int32"
+                    }
+                }
+            },
+            "UpdateUserProfileRequest": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "profilePic": {
+                        "type": "string"
                     }
                 }
             },
@@ -2481,67 +2441,6 @@
                     },
                     "empty": {
                         "type": "boolean"
-                    }
-                }
-            },
-            "PageResponseUserResponse": {
-                "type": "object",
-                "properties": {
-                    "content": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserResponse"
-                        }
-                    },
-                    "number": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "size": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "numberOfElements": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "last": {
-                        "type": "boolean"
-                    },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "empty": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "UserResponse": {
-                "type": "object",
-                "properties": {
-                    "publicId": {
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "phone": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string"
-                    },
-                    "discipline": {
-                        "type": "string"
                     }
                 }
             },

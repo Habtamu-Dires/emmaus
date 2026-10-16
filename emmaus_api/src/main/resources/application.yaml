@@ -15,9 +15,9 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/emmaus_db}
-    username: ${SPRING_DATASOURCE_USERNAME:hab}
-    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/emmaus_db} #
+    username: ${SPRING_DATASOURCE_USERNAME:hab} #hab
+    password: ${SPRING_DATASOURCE_PASSWORD:password} #password
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true

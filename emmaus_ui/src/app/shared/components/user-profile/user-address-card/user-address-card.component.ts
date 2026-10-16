@@ -5,21 +5,23 @@ import { InputFieldComponent } from '../../form/input/input-field.component';
 import { ButtonComponent } from '../../ui/button/button.component';
 import { LabelComponent } from '../../form/label/label.component';
 import { ModalComponent } from '../../ui/modal/modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmailUpdateRequest, UserProfile } from '../../../../services/models';
-import { updateEmail, updateUserProfile } from '../../../../services/functions';
+import { updateEmail } from '../../../../services/functions';
 import { AuthService } from '../../../../services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Api } from '../../../../services/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-address-card',
   imports: [
-    InputFieldComponent,
     ButtonComponent,
     LabelComponent,
     ModalComponent,
     FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './user-address-card.component.html',
   styles: ``
@@ -28,16 +30,21 @@ export class UserAddressCardComponent {
 
   user:UserProfile;
   isOpen = false;
-  email:string | undefined;
+
+  emailForm:FormGroup;
 
   constructor(
     public modal: ModalService,
     private authService: AuthService,
     private api:Api,
     private toastr:ToastrService,
+    private fb:FormBuilder
   ) {
     this.user = this.authService.profile as UserProfile;
-    this.email = this.user.email;
+
+    this.emailForm = this.fb.group({
+      email:[this.user.email,[Validators.required,Validators.email]]
+    })
   }
 
   
@@ -46,12 +53,18 @@ export class UserAddressCardComponent {
 
 
   handleSave() {
-    if(this.email !== this.user.email){
-      const newEmail = this.user.email;
-      const request:EmailUpdateRequest = {email: newEmail}
-      this.updateEmail(request);
+    if(this.emailForm.valid){
+      const email = this.emailForm.get('email')?.value;
+
+      if(email !== this.user.email){
+        const request:EmailUpdateRequest = {email: email}
+        this.updateEmail(request);
+      }
+      this.isOpen = false;
+    } else {
+      this.emailForm.markAllAsTouched();
     }
-    this.isOpen = false;
+    
   }
 
   updateEmail(request:EmailUpdateRequest){
@@ -68,5 +81,10 @@ export class UserAddressCardComponent {
     }).finally(()=>{
       this.isOpen = false;
     })
+  }
+
+  isInvalid(controlName: string): boolean {
+    const control = this.emailForm.get(controlName);
+    return !!control && control.invalid && control.touched;
   }
 }

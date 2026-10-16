@@ -1,6 +1,7 @@
 package com.hab.emmaus.app_user.application.app_user;
 
 
+import com.hab.emmaus.app_user.application.app_user.dto.UpdateUserProfileRequest;
 import com.hab.emmaus.app_user.application.dto.TextDto;
 import com.hab.emmaus.app_user.application.app_user.dto.CreateUserRequest;
 import com.hab.emmaus.app_user.application.app_user.dto.UserProfile;
@@ -98,9 +99,9 @@ public class AppUserService {
         return UserProfile.from(user);
     }
 
-    public UserProfile updateProfile(UserProfile profile){
+    public UserProfile updateProfile(UUID publicId,UpdateUserProfileRequest request){
         UUID loggedId = SecurityUtils.currentUser().userPublicId();
-        if(!loggedId.equals(profile.publicId())){
+        if(!loggedId.equals(publicId)){
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED_IN_CURRENT_STATE);
         }
 
@@ -108,9 +109,9 @@ public class AppUserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         user.update(
-                profile.profilePic(),
-                profile.firstName(),
-                profile.lastName()
+                request.profilePic(),
+                request.firstName(),
+                request.lastName()
         );
 
         userRepo.save(user);

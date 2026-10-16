@@ -165,7 +165,12 @@ export const routes: Routes = [
         path:'inquires',
         component:InquiresComponent,
         title:'Emmaus Inquires'
-      }
+      },
+      {
+        path:'change-password',
+        component:ChangePasswordComponent,
+        title:'Change Password',
+      },
     ]
   },
   // auth pages

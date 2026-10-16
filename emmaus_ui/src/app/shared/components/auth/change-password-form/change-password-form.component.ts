@@ -80,7 +80,7 @@ export class ChangePasswordFormComponent implements OnInit{
       this.toastr.success('Password changed successfully');
 
       if(this.isAuthenticated){
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin']);
       }else{
         this.router.navigate(['/signin']);
       }
