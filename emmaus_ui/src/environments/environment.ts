@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://globallogisticsplc.com/api',
-    brokerUrl: 'wss://globallogisticsplc.com/api/ws/notifications'
+    apiUrl: 'https://emmaus-api-fh6x.onrender.com/api',
+    brokerUrl: 'wss://https://emmaus-api-fh6x.onrender.com/api/ws/notifications'
 };

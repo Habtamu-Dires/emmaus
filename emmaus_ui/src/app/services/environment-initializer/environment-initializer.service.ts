@@ -22,8 +22,8 @@ export class EnvironmentInitializerService {
       environment.brokerUrl = `${isHttps ? 'wss' : 'ws'}://${cleanHostPath}/ws/notifications`;
 
     } else {
-      environment.apiUrl = 'http://localhost:8088/api';
-      environment.brokerUrl = 'ws://localhost:8088/api/ws/notifications';
+      // environment.apiUrl = 'http://localhost:8088/api';
+      // environment.brokerUrl = 'ws://localhost:8088/api/ws/notifications';
     }
 
   }
