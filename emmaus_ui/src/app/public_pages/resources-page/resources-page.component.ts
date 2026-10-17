@@ -4,12 +4,13 @@ import { RouterLink } from '@angular/router';
 import { DocumentResponse } from '../../services/models';
 import { Api } from '../../services/api';
 import { getPagesOfDocuments } from '../../services/functions';
+import { FileReaderComponent } from '../../shared/components/file-reader/file-reader.component';
 
 
 @Component({
   selector: 'app-resources-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FileReaderComponent],
   templateUrl: './resources-page.component.html',
 })
 export class ResourcesPageComponent implements OnInit {
