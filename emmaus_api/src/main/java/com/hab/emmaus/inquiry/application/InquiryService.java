@@ -105,6 +105,7 @@ public class InquiryService {
                         .message(rs.getString("message"))
                         .senderName(rs.getString("sender_name"))
                         .senderPhone(rs.getString("sender_phone"))
+                        .senderEmail(rs.getString("sender_email"))
                         .remark(rs.getString("remark"))
                         .createdAt(rs.getTimestamp("created_at").toInstant())
                         .status(rs.getString("status"))
