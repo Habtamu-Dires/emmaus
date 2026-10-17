@@ -28,7 +28,7 @@ import { YoutubePlayerComponent } from '../../shared/components/youtube-player/y
 export class HomeComponent implements OnInit,AfterViewInit, OnDestroy {
   @ViewChild('statsSection') statsSection!: ElementRef<HTMLElement>;
 
-  videoUrl: string = 'https://youtu.be/SAv_9AcUubI?list=RDSAv_9AcUubI';
+  videoUrl: string = 'https://www.youtube.com/watch?v=txaHgDaci5k';
 
   programs: ProgramResponse[] = [];
   stories: ImpactStoryResponse[] = [];
