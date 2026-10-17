@@ -127,7 +127,7 @@ public class ImpactStoryService {
         }
 
         // 3. Data Query (Add Order and Pagination)
-        String pagination = " ORDER BY s.display_order DESC LIMIT :limit OFFSET :offset";
+        String pagination = " ORDER BY s.display_order LIMIT :limit OFFSET :offset";
         params.addValue("limit", size);
         params.addValue("offset", pageable.getOffset());
 

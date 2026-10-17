@@ -106,7 +106,7 @@ public class ProgramService {
         }
 
         // 3. Data Query (Add Order and Pagination)
-        String pagination = " ORDER BY p.display_order DESC LIMIT :limit OFFSET :offset";
+        String pagination = " ORDER BY p.display_order LIMIT :limit OFFSET :offset";
         params.addValue("limit", size);
         params.addValue("offset", pageable.getOffset());
 
